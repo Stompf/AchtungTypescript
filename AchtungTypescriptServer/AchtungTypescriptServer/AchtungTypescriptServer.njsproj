@@ -36,6 +36,7 @@
     <TypeScriptCompile Include="app.ts" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <TypeScriptCompile Include="Scripts\collections.ts" />
     <TypeScriptCompile Include="Scripts\typings\express\express.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\mime\mime.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />

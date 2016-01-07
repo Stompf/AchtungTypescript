@@ -37,6 +37,7 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\collections.ts" />
     <TypeScriptCompile Include="Scripts\game\app.ts" />
     <Content Include="Scripts\socket.io-client.js" />
     <TypeScriptCompile Include="Scripts\main.ts" />
