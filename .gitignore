@@ -1,0 +1,14 @@
+*.suo
+.vs/
+bin/
+obj/
+node_modules/
+*.user
+packages/
+.ntvs_analysis.dat
+game/*.js
+game/**/*.js
+app.js
+app.js.map
+main.js
+main.js.map

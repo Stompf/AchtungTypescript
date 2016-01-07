@@ -1,0 +1,14 @@
+{
+  "name": "AchtungTypescriptServer",
+  "version": "0.0.0",
+  "description": "AchtungTypescriptServer",
+  "main": "app.js",
+  "author": {
+    "name": "Anton",
+    "email": ""
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "^1.4.0"
+  }
+}
