@@ -40,13 +40,22 @@
     <TypeScriptCompile Include="Scripts\collections.ts" />
     <TypeScriptCompile Include="Scripts\game\app.ts" />
     <Content Include="Scripts\socket.io-client.js" />
+    <TypeScriptCompile Include="Scripts\game\ClientGame.ts" />
+    <TypeScriptCompile Include="Scripts\game\ClientMap.ts" />
+    <TypeScriptCompile Include="Scripts\game\ClientPlayer.ts" />
+    <TypeScriptCompile Include="Scripts\game\KeyboardStates.ts" />
+    <TypeScriptCompile Include="Scripts\game\LocalGameVariables.ts" />
     <TypeScriptCompile Include="Scripts\main.ts" />
+    <TypeScriptCompile Include="Scripts\typings\ClientTypings.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\tests\jasmine.extensions.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\requirejs\require.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\socket.io-client\socket.io-client.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\underscore\underscore.d.ts" />
+    <TypeScriptCompile Include="..\..\CommonCode\*.d.ts">
+      <Link>Scripts\commonCode\%(FileName)</Link>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-2.1.4.min.map" />

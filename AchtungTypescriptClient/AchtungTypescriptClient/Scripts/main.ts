@@ -27,6 +27,6 @@ requirejs(['game/app'], (app: any) => {
     }
 
     var achtungTypescript = new app(canvas);
-    achtungTypescript.start();
+    achtungTypescript.startLocal();
     console.log('done');
 });
