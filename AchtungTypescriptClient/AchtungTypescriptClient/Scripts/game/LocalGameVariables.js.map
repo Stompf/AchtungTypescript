@@ -1,1 +1,0 @@
-{"version":3,"file":"LocalGameVariables.js","sourceRoot":"","sources":["LocalGameVariables.ts"],"names":[],"mappings":";IAAA,IAAM,kBAAkB,GAAgC;QACpD,UAAU,EAAsB;YAC5B,MAAM,EAAE,EAAE;YACV,KAAK,EAAE,EAAE;SACZ;QACD,WAAW,EAAE,GAAG;QAChB,UAAU,EAAE,EAAE;KACjB,CAAC;IACF,OAAS,kBAAkB,CAAC"}
