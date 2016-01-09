@@ -8,9 +8,15 @@ packages/
 .ntvs_analysis.dat
 game/*.js
 game/**/*.js
+game/*.js.map
+game/**/*.js.map
 app.js
 app.js.map
 main.js
 main.js.map
 collections.js.map
 collections.js
+AchtungTypescriptServer/AchtungTypescriptServer/Scripts/server/*.js
+AchtungTypescriptServer/AchtungTypescriptServer/Scripts/server/**/*.js
+AchtungTypescriptServer/AchtungTypescriptServer/Scripts/server/*.js.map
+AchtungTypescriptServer/AchtungTypescriptServer/Scripts/server/**/*.js.map

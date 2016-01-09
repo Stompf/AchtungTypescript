@@ -14,9 +14,8 @@ class AchtungTypescript {
     start() {
         this.socket = socketIO('http://localhost:3000');
 
-
+        this.socket.on('chat message', (msg: string) => {
+            alert('chat message: ' + msg);
+        });
     }
-
-
-
 } export = AchtungTypescript;
