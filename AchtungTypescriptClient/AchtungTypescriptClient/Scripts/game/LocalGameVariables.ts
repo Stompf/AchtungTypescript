@@ -1,9 +1,9 @@
 ﻿const localGameVariables = <CommonTypings.GameVariables>{
     playerSize: <CommonTypings.Size>{
-        height: 10,
-        width: 10
+        height: 3,
+        width: 3
     },
-    playerSpeed: 500,
+    playerSpeed: 50,
     tickLength: 50
 };
 export = localGameVariables;
