@@ -6,7 +6,7 @@
 requirejs.config({
     urlArgs: "bust=" + (new Date()).getTime(),
     paths: {
-        'jquery': 'jquery-2.1.4.min',
+        'jquery': 'jquery-2.2.0.min',
         'knockout': 'knockout-3.4.0',
         'underscore': 'underscore.min'
     },

@@ -4,6 +4,6 @@
         width: 3
     },
     playerSpeed: 50,
-    tickLength: 50
+    tickLength: 100
 };
 export = localGameVariables;

@@ -2,6 +2,10 @@
 
     interface Player {
         id: string;
+        color: string;
+        position: CommonTypings.Vector2D;
+        isAlive: boolean;
+        direction: CommonTypings.Direction;
     }
 
     interface Vector2D {
@@ -30,5 +34,12 @@
     interface MapBox {
         boundingBox: BoundingBox;
         player: Player;
+    }
+
+    const enum Direction {
+        UP,
+        DOWN,
+        RIGHT,
+        LEFT
     }
 }

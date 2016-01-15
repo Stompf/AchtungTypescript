@@ -71,14 +71,18 @@ class ClientGame {
     private update = (lastTick: number) => {
         this.players.forEach(player => {
             player.updateLogic(this.tickLength);
+            this.map.movePlayer(player);
         });
 
-        this.checkConditions();
+        
+        //this.checkConditions();
     }
 
     private render = (tFrame: number) => {
+        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+
         this.players.forEach(player => {
-            player.draw(this.ctx, tFrame);
+            this.map.draw(this.ctx, tFrame);
         });
     }
 
@@ -115,19 +119,19 @@ class ClientGame {
     }
 
     private checkConditions() {
-        this.players.filter(player => {
-            return player.isAlive;
-        }).forEach(player => {
-            if (player.boundingBox.bottomLeft.x <= 0 ||
-                player.boundingBox.bottomRight.x >= this.map.size.width ||
-                player.boundingBox.topLeft.y <= 0 ||
-                player.boundingBox.bottomRight.y >= this.map.size.height) {
+        //this.players.filter(player => {
+        //    return player.isAlive;
+        //}).forEach(player => {
+        //    if (player.boundingBox.bottomLeft.x <= 0 ||
+        //        player.boundingBox.bottomRight.x >= this.map.size.width ||
+        //        player.boundingBox.topLeft.y <= 0 ||
+        //        player.boundingBox.bottomRight.y >= this.map.size.height) {
 
-                player.isAlive = false;
-            }
+        //        player.isAlive = false;
+        //    }
 
 
-        });
+        //});
     }
 }
 export = ClientGame;
