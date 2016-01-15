@@ -45,6 +45,7 @@
     <TypeScriptCompile Include="Scripts\game\ClientPlayer.ts" />
     <TypeScriptCompile Include="Scripts\game\KeyboardStates.ts" />
     <TypeScriptCompile Include="Scripts\game\LocalGameVariables.ts" />
+    <TypeScriptCompile Include="Scripts\game\TextArea.ts" />
     <TypeScriptCompile Include="Scripts\main.ts" />
     <TypeScriptCompile Include="Scripts\typings\ClientTypings.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />

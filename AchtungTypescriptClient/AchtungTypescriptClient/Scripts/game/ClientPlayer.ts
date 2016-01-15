@@ -1,5 +1,6 @@
 ﻿import KeyboardStates = require('./KeyboardStates');
 import ko = require('knockout');
+import textArea = require('./TextArea');
 
 class ClientPlayer implements CommonTypings.Player {
 

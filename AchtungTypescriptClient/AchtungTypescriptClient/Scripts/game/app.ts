@@ -33,7 +33,7 @@ class AchtungTypescript {
         localPlayers.forEach(player => {
             const x = Math.floor((Math.random() * this.currentGame.map.size.width) + 1);
             const y = Math.floor((Math.random() * this.currentGame.map.size.height) + 1);
-            player.position = this.currentGame.map.getRandomPosition(10);
+            player.position = this.currentGame.map.getRandomPosition(30);
         });
 
         this.currentGame.startGame();

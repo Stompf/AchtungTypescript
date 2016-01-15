@@ -1,4 +1,5 @@
 ﻿import collections = require('../collections');
+import textArea = require('./TextArea');
 
 class ClientMap {
 
@@ -87,6 +88,7 @@ class ClientMap {
             });
         } else {
             player.isAlive = false;
+            textArea.addText(player.color + ' deaded');
         }
 
         return true;
@@ -97,12 +99,6 @@ class ClientMap {
 
         this.mapBoxPartsWidth = Math.floor(this.size.width / this.playerSize.width);
         this.mapBoxPartsHeight = Math.floor(this.size.height / this.playerSize.height);
-
-        /*for (let x = 0; x < this.mapBoxPartsWidth; x++) {
-            for (let y = 0; y < this.mapBoxPartsHeight; y++) {
-                this.mapBox.setValue(this.toMapBoxId(x, y), <CommonTypings.MapBox>{});
-            }
-        }*/
     }
 }
 export = ClientMap;

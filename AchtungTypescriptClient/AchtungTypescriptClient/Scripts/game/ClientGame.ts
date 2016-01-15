@@ -1,5 +1,6 @@
 ﻿import ClientMap = require('./ClientMap');
 import ClientPlayer = require('./ClientPlayer');
+import textArea = require('./TextArea');
 
 class ClientGame {
 
@@ -34,6 +35,8 @@ class ClientGame {
     }
 
     startGame() {
+        textArea.addText('startGame');
+
         window.addEventListener("blur", (e) => { this.onBlur(); }, false);
         this.ctx.canvas.addEventListener("keydown", (e) => { this.onKeyDown(e); }, false);
         this.ctx.canvas.addEventListener("keyup", (e) => { this.onKeyUp(e); }, false);
@@ -73,9 +76,6 @@ class ClientGame {
             player.updateLogic(this.tickLength);
             this.map.movePlayer(player);
         });
-
-        
-        //this.checkConditions();
     }
 
     private render = (tFrame: number) => {
@@ -116,22 +116,6 @@ class ClientGame {
                 break;
             }
         }
-    }
-
-    private checkConditions() {
-        //this.players.filter(player => {
-        //    return player.isAlive;
-        //}).forEach(player => {
-        //    if (player.boundingBox.bottomLeft.x <= 0 ||
-        //        player.boundingBox.bottomRight.x >= this.map.size.width ||
-        //        player.boundingBox.topLeft.y <= 0 ||
-        //        player.boundingBox.bottomRight.y >= this.map.size.height) {
-
-        //        player.isAlive = false;
-        //    }
-
-
-        //});
     }
 }
 export = ClientGame;
