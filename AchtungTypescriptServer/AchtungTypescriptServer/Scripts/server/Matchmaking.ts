@@ -1,5 +1,6 @@
 ﻿import collections = require('../collections');
 import AchtungGameServer = require('./AchtungGameServer');
+import serverGameVariables = require('./ServerGameVariables');
 
 class Matchmaking {
 
@@ -20,6 +21,8 @@ class Matchmaking {
         this.queuedConnections.setValue(socket.id, socket);
         this.socketStatus.setValue(socket.id, null);
         this.handleQueuedConnectionChanged(socket);
+
+        socket.emit('LookingForGame', <AchtungCommunication.LookingForGame>{});
     }
 
     removeConnection(socket: SocketIO.Socket) {
@@ -45,6 +48,8 @@ class Matchmaking {
         this.socketStatus.setValue(socket1.id, gameID);
         this.socketStatus.setValue(socket2.id, gameID);
 
+        socket1.emit('GameFound', <AchtungCommunication.GameFound>{ gameVariables: serverGameVariables, players: newGame.players.values() });
+        socket2.emit('GameFound', <AchtungCommunication.GameFound>{});
     }
 
     createAchtungGameServerId(ids: Array<string>) {

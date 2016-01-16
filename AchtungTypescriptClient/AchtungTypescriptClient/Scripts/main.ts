@@ -3,12 +3,16 @@
 // Configure loading modules from the lib directory,
 // except for 'app' ones, which are in a sibling
 // directory.
+
+import AchtungTypescript = require('./game/app');
+
 requirejs.config({
     urlArgs: "bust=" + (new Date()).getTime(),
     paths: {
         'jquery': 'jquery-2.2.0.min',
         'knockout': 'knockout-3.4.0',
-        'underscore': 'underscore.min'
+        'underscore': 'underscore.min',
+        'moment': 'moment.min'
     },
     shim: {
         "jquery": { exports: "$" },
@@ -26,7 +30,8 @@ requirejs(['game/app'], (app: any) => {
         return;
     }
 
-    var achtungTypescript = new app(canvas);
-    achtungTypescript.startLocal();
+    var achtungTypescript = new app(canvas) as AchtungTypescript;
+    achtungTypescript.startNetwork();
+    //achtungTypescript.startLocal();
     console.log('done');
 });

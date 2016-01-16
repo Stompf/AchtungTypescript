@@ -1,8 +1,10 @@
 ﻿import socketIO = require('socket.io-client');
 import ClientGame = require('./ClientGame');
+import NetworkGame = require('./NetworkGame');
 import ClientPlayer = require('./ClientPlayer');
 import KeyboardStates = require('./KeyboardStates');
 import localGameVariables = require('./LocalGameVariables');
+import textArea = require('./TextArea');
 
 class AchtungTypescript {
     canvasElement: HTMLCanvasElement;
@@ -11,17 +13,19 @@ class AchtungTypescript {
     socket: SocketIOClient.Socket;
     currentGame: ClientGame;
 
+    networkAddress = 'http://localhost:3000';
+
     constructor(canvas: HTMLCanvasElement) {
         this.canvasElement = canvas;
         this.ctx = canvas.getContext('2d');
     }
 
     startNetwork() {
-        this.socket = socketIO('http://localhost:3000');
+        textArea.clearText();
+        textArea.addText('Connecting to LunneNET...');
+        this.socket = socketIO(this.networkAddress);
 
-        this.socket.on('chat message', (msg: string) => {
-            alert('chat message: ' + msg);
-        });
+        this.initAchtungCommands();
     }
 
     startLocal() {
@@ -39,4 +43,19 @@ class AchtungTypescript {
         this.currentGame.startGame();
     }
 
+    private initAchtungCommands() {
+        this.socket.on('chat message', (msg: string) => {
+            textArea.addText('chat message: ' + msg);
+        });
+
+        this.socket.on('LookingForGame', (obj: AchtungCommunication.LookingForGame) => {
+            textArea.addText('Connected! LookingForGame....');
+        });
+
+        this.socket.on('GameFound', (obj: AchtungCommunication.GameFound) => {
+            textArea.addText('MatchFound! Starting match...');
+            const networkGame = new NetworkGame(this.ctx, obj.players, obj.gameVariables, this.socket);
+        });
+
+    }
 } export = AchtungTypescript;

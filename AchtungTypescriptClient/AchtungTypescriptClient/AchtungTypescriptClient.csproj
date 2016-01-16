@@ -30,6 +30,10 @@
     <Content Include="Scripts\jquery-2.2.0.min.js" />
     <Content Include="Scripts\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\r.js" />
     <Content Include="Scripts\require.js" />
     <Content Include="Scripts\underscore.js" />
@@ -40,6 +44,7 @@
     <TypeScriptCompile Include="Scripts\collections.ts" />
     <TypeScriptCompile Include="Scripts\game\app.ts" />
     <Content Include="Scripts\socket.io-client.js" />
+    <TypeScriptCompile Include="Scripts\game\NetworkGame.ts" />
     <TypeScriptCompile Include="Scripts\game\ClientGame.ts" />
     <TypeScriptCompile Include="Scripts\game\ClientMap.ts" />
     <TypeScriptCompile Include="Scripts\game\ClientPlayer.ts" />
@@ -51,6 +56,8 @@
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\tests\jasmine.extensions.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\moment\moment-node.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\moment\moment.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\requirejs\require.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\socket.io-client\socket.io-client.d.ts" />
     <TypeScriptCompile Include="..\..\CommonCode\*.d.ts">

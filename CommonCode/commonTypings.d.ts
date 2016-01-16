@@ -32,7 +32,6 @@
     }
 
     interface MapBox {
-        boundingBox: BoundingBox;
         player: Player;
     }
 

@@ -1,14 +1,16 @@
 ﻿import ClientMap = require('./ClientMap');
 import ClientPlayer = require('./ClientPlayer');
 import textArea = require('./TextArea');
+import moment = require('moment');
 
-class ClientGame {
+class NetworkGame {
 
     map: ClientMap;
     ctx: CanvasRenderingContext2D;
     playerSize: CommonTypings.Size;
-    players: Array<ClientPlayer>;
-    
+    players: Array<CommonTypings.Player>;
+    socket: SocketIOClient.Socket;
+
     stopMain: number;
     lastTick: number;
     tickLength: number;
@@ -17,7 +19,10 @@ class ClientGame {
     gameOn: boolean;
     gameVariables: CommonTypings.GameVariables;
 
-    constructor(ctx: CanvasRenderingContext2D, players: Array<ClientPlayer>, gameVariables: CommonTypings.GameVariables) {
+    lastDirectionChange: moment.Moment;
+    waitTime: number = 500;
+
+    constructor(ctx: CanvasRenderingContext2D, players: Array<CommonTypings.Player>, gameVariables: CommonTypings.GameVariables, socket: SocketIOClient.Socket) {
         this.ctx = ctx;
         this.ctx.canvas.tabIndex = 1;
         this.ctx.canvas.style.outline = "none";
@@ -28,6 +33,8 @@ class ClientGame {
         this.lastRender = this.lastTick; //Pretend the first draw was on first update.
 
         this.gameVariables = gameVariables;
+        this.socket = socket;
+        this.lastDirectionChange = moment();
 
         this.tickLength = gameVariables.tickLength; //This sets your simulation to run at 20Hz (50ms)
 
@@ -37,9 +44,7 @@ class ClientGame {
     startGame() {
         textArea.addText('startGame');
 
-        window.addEventListener("blur", (e) => { this.onBlur(); }, false);
         this.ctx.canvas.addEventListener("keydown", (e) => { this.onKeyDown(e); }, false);
-        this.ctx.canvas.addEventListener("keyup", (e) => { this.onKeyUp(e); }, false);
 
         this.mainLoop(performance.now());
         this.gameOn = true;
@@ -72,46 +77,36 @@ class ClientGame {
     }
 
     private update = (lastTick: number) => {
-        this.players.forEach(player => {
-            this.map.movePlayer(player);
-        });
+
     }
 
     private render = (tFrame: number) => {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-        this.map.draw(this.ctx, tFrame);
-    }
 
-    private onBlur() {
-        for (var i = 0; i < this.players.length; i++) {
-            if (this.players[i].keyboardStates != null) {
-                this.players[i].keyboardStates.resetAll();
-            }
-        }
+        this.players.forEach(player => {
+            this.map.draw(this.ctx, tFrame);
+        });
     }
 
     private onKeyDown(e: KeyboardEvent) {
-        if (!this.gameOn) {
+        if (!this.gameOn && moment().add(this.waitTime, 'milliseconds').diff(this.lastDirectionChange) > 0) {
             return;
         }
 
-        for (var i = 0; i < this.players.length; i++) {
-            if (this.players[i].keyboardStates != null && this.players[i].keyboardStates.keyDown(e.keyCode)) {
-                break;
-            }
-        }
-    }
+        let direction: CommonTypings.Direction = null;
+        if (e.keyCode === 65) { //A
+            direction = CommonTypings.Direction.LEFT;
+        } else if (e.keyCode === 83) { //S
+            direction = CommonTypings.Direction.RIGHT;
+        } 
 
-    private onKeyUp(e: KeyboardEvent) {
-        if (!this.gameOn) {
-            return;
+        if (direction != null) {
+            this.socket.emit('NewDirection', <AchtungCommunication.NewDirection>{
+                direction: direction
+            });
         }
 
-        for (var i = 0; i < this.players.length; i++) {
-            if (this.players[i].keyboardStates != null && this.players[i].keyboardStates.keyUp(e.keyCode)) {
-                break;
-            }
-        }
+        this.lastDirectionChange = moment();
     }
 }
-export = ClientGame;
+export = NetworkGame;
