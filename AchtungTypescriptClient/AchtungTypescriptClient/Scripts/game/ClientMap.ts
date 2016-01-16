@@ -54,7 +54,7 @@ class ClientMap {
     }
 
     movePlayer(player: CommonTypings.Player) {
-        if (!player.isAlive || player.position.x * this.playerSize.width > this.size.width || player.position.x < 0 || player.position.y < 0 || player.position.y * this.playerSize.height > this.size.height) {
+        if (!player.isAlive) {
             return false;
         }
 
@@ -75,7 +75,7 @@ class ClientMap {
                 break;
         }
 
-        if (player.position.x * this.playerSize.width > this.size.width || player.position.x < 0 || player.position.y < 0 || player.position.y * this.playerSize.height > this.size.height) {
+        if (player.position.x * this.playerSize.width >= this.size.width || player.position.x < 0 || player.position.y < 0 || player.position.y * this.playerSize.height >= this.size.height) {
             textArea.addText(player.color + ' deaded');
             player.isAlive = false;
             return false;

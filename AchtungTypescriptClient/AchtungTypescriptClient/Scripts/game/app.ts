@@ -29,15 +29,17 @@ class AchtungTypescript {
     }
 
     startLocal() {
-        const localPlayers = [new ClientPlayer('local_1', 'blue', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.A, right: KeyboardStates.D, up: KeyboardStates.W, down: KeyboardStates.S }),
-            new ClientPlayer('local_2', 'red', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.ArrowLeft, right: KeyboardStates.ArrowRight, up: KeyboardStates.ArrowUp, down: KeyboardStates.ArrowDown })];
+        const localPlayer1 = new ClientPlayer('local_1', 'blue', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.A, right: KeyboardStates.D, up: KeyboardStates.W, down: KeyboardStates.S });
+        const localPlayer2 = new ClientPlayer('local_2', 'red', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.ArrowLeft, right: KeyboardStates.ArrowRight, up: KeyboardStates.ArrowUp, down: KeyboardStates.ArrowDown });
+
+        const localPlayers = [localPlayer1, localPlayer2];
 
         this.currentGame = new ClientGame(this.ctx, localPlayers, localGameVariables);
 
         localPlayers.forEach(player => {
             const x = Math.floor((Math.random() * this.currentGame.map.size.width) + 1);
             const y = Math.floor((Math.random() * this.currentGame.map.size.height) + 1);
-            player.position = this.currentGame.map.getRandomPosition(30);
+            player.position = this.currentGame.map.getRandomPosition(50);
         });
 
         this.currentGame.startGame();
