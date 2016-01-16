@@ -45,8 +45,6 @@ class NetworkGame {
     }
 
     startGame() {
-        textArea.addText('startGame');
-
         this.ctx.canvas.addEventListener("keydown", (e) => { this.onKeyDown(e); }, false);
 
         this.mainLoop(performance.now());
@@ -85,10 +83,7 @@ class NetworkGame {
 
     private render = (tFrame: number) => {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-
-        this.players.forEach(player => {
-            this.map.draw(this.ctx, tFrame);
-        });
+        this.map.draw(this.ctx, tFrame);
     }
 
     private onKeyDown(e: KeyboardEvent) {
@@ -135,18 +130,20 @@ class NetworkGame {
             this.lastServerTick = obj.tick;
         });
 
-        socket.on('ServerTick', (obj: AchtungCommunication.ServerTick) => {
-            if (obj.tick <= this.lastServerTick) {
-                return;
-            }
-
+        socket.on('GameOver', (obj: AchtungCommunication.GameOver) => {
             this.map.mapBox.clear();
 
             obj.mapBox.forEach(mapBox => {
                 this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
             });
 
-            this.lastServerTick = obj.tick;
+            window.cancelAnimationFrame(this.stopMain);
+
+            if (obj.winner != null) {
+                textArea.addText(obj.winner.color + ' (' + obj.winner.id + ') won!');
+            } else {
+                textArea.addText('Its a draw!');
+            }
         });
 
         socket.emit('PlayerReady', <AchtungCommunication.PlayerReady>{});

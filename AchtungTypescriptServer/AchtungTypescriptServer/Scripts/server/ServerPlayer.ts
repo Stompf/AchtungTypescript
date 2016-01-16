@@ -1,6 +1,4 @@
 ﻿class ServerPlayer implements CommonTypings.Player {
-
-    socket: SocketIO.Socket;
     id: string;
     color: string;
     position: CommonTypings.Vector2D;
@@ -12,9 +10,8 @@
 
     ready: boolean;
 
-    constructor(socket: SocketIO.Socket, color: string, startPosition: CommonTypings.Vector2D, startDirection: CommonTypings.Direction) {
-        this.socket = socket;
-        this.id = socket.id;
+    constructor(id: string, color: string, startPosition: CommonTypings.Vector2D, startDirection: CommonTypings.Direction) {
+        this.id = id;
         this.color = color;
         this.isAlive = true;
         this.position = startPosition;

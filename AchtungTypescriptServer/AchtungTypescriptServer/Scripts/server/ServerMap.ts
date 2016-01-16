@@ -1,4 +1,5 @@
 ﻿import collections = require('../collections');
+import serverGameVariables = require('./ServerGameVariables');
 
 class ServerMap {
 
@@ -10,7 +11,13 @@ class ServerMap {
     mapBoxPartsHeight: number;
 
     constructor() {
+        this.playerSize = serverGameVariables.playerSize;
+        this.size = <CommonTypings.Size>{
+            width: 300,
+            height: 150
+        };
 
+        this.initMapBox();  
     }
 
     reset() {
@@ -39,7 +46,7 @@ class ServerMap {
     }
 
     movePlayer(player: CommonTypings.Player) {
-        if (!player.isAlive || player.position.x > this.mapBoxPartsWidth || player.position.x < 0 || player.position.y < 0 || player.position.y > this.mapBoxPartsHeight) {
+        if (!player.isAlive || player.position.x * this.playerSize.width > this.size.width || player.position.x < 0 || player.position.y < 0 || player.position.y * this.playerSize.height > this.size.height) {
             return false;
         }
 
@@ -60,7 +67,7 @@ class ServerMap {
                 break;
         }
 
-        if (player.position.x > this.mapBoxPartsWidth || player.position.x < 0 || player.position.y < 0 || player.position.y > this.mapBoxPartsHeight) {
+        if (player.position.x * this.playerSize.width > this.size.width || player.position.x < 0 || player.position.y < 0 || player.position.y * this.playerSize.height > this.size.height) {
             player.isAlive = false;
             return false;
         }

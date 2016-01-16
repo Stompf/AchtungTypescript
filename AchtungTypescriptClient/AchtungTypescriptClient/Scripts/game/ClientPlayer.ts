@@ -26,45 +26,28 @@ class ClientPlayer implements CommonTypings.Player {
         this.isAlive = true;
         this.direction = CommonTypings.Direction.RIGHT;
 
+        this.keyboardStates.isDownKeyDown.subscribe(isDown => {
+            if (isDown && this.direction !== CommonTypings.Direction.DOWN) {
+                this.direction = CommonTypings.Direction.UP;
+            }
+
+        })
+
+        this.keyboardStates.isUpKeyDown.subscribe(isDown => {
+            if (isDown && this.direction !== CommonTypings.Direction.UP) {
+                this.direction = CommonTypings.Direction.DOWN;
+            }
+        });
+
         this.keyboardStates.isLeftKeyDown.subscribe(isDown => {
-            if (isDown) {
-                switch (this.direction) {
-                    case CommonTypings.Direction.UP:
-                        this.direction = CommonTypings.Direction.RIGHT;
-                        break;
-                    case CommonTypings.Direction.DOWN:
-                        this.direction = CommonTypings.Direction.LEFT;
-                        break;
-                    case CommonTypings.Direction.RIGHT:
-                        this.direction = CommonTypings.Direction.DOWN;
-                        break;
-                    case CommonTypings.Direction.LEFT:
-                        this.direction = CommonTypings.Direction.UP;
-                        break;
-                    default:
-                        break;
-                }
+            if (isDown && this.direction !== CommonTypings.Direction.RIGHT) {
+                this.direction = CommonTypings.Direction.LEFT;
             }
         });
 
         this.keyboardStates.isRightKeyDown.subscribe(isDown => {
-            if (isDown) {
-                switch (this.direction) {
-                    case CommonTypings.Direction.UP:
-                        this.direction = CommonTypings.Direction.LEFT;
-                        break;
-                    case CommonTypings.Direction.DOWN:
-                        this.direction = CommonTypings.Direction.RIGHT;
-                        break;
-                    case CommonTypings.Direction.RIGHT:
-                        this.direction = CommonTypings.Direction.UP;
-                        break;
-                    case CommonTypings.Direction.LEFT:
-                        this.direction = CommonTypings.Direction.DOWN;
-                        break;
-                    default:
-                        break;
-                }
+            if (isDown && this.direction !== CommonTypings.Direction.LEFT) {
+                this.direction = CommonTypings.Direction.RIGHT;
             }
         });
     }

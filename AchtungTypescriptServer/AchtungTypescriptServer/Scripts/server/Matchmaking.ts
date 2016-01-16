@@ -34,7 +34,7 @@ class Matchmaking {
 
     handleQueuedConnectionChanged(changedSocket: SocketIO.Socket) {
         if (this.queuedConnections.size() > 1) {
-            this.startNewAchtungGame(changedSocket, this.queuedConnections.values()[1]);
+            this.startNewAchtungGame(changedSocket, this.queuedConnections.values()[0]);
         }
     }
 
@@ -49,7 +49,7 @@ class Matchmaking {
         this.socketStatus.setValue(socket2.id, gameID);
 
         socket1.emit('GameFound', <AchtungCommunication.GameFound>{ gameVariables: serverGameVariables, players: newGame.players.values() });
-        socket2.emit('GameFound', <AchtungCommunication.GameFound>{});
+        socket2.emit('GameFound', <AchtungCommunication.GameFound>{ gameVariables: serverGameVariables, players: newGame.players.values() });
     }
 
     createAchtungGameServerId(ids: Array<string>) {

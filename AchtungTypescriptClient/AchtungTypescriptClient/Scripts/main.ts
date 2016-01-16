@@ -24,14 +24,17 @@ requirejs.config({
 // Start loading the main app file. Put all of
 // your application logic in there.
 requirejs(['game/app'], (app: any) => {
-    const canvas = <HTMLCanvasElement>document.getElementById('canvasGame');
-    if (canvas == null) {
-        alert('could not find canvas!');
-        return;
-    }
 
-    var achtungTypescript = new app(canvas) as AchtungTypescript;
-    achtungTypescript.startNetwork();
-    //achtungTypescript.startLocal();
-    console.log('done');
+    setTimeout(() => {
+        const canvas = <HTMLCanvasElement>document.getElementById('canvasGame');
+        if (canvas == null) {
+            alert('could not find canvas!');
+            return;
+        }
+
+        var achtungTypescript = new app(canvas) as AchtungTypescript;
+        //achtungTypescript.startNetwork();
+        achtungTypescript.startLocal();
+        console.log('done');
+    }, 1000);
 });
