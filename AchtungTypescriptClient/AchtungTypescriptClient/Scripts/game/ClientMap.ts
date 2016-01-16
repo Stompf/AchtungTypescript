@@ -84,6 +84,7 @@ class ClientMap {
         const mapBox = this.mapBox.getValue(mapBoxId);
         if (mapBox == null) {
             this.mapBox.setValue(mapBoxId, <CommonTypings.MapBox>{
+                mapboxID: mapBoxId,
                 player: player
             });
         } else {

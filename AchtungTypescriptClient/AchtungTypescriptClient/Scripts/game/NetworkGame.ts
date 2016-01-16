@@ -15,6 +15,7 @@ class NetworkGame {
     lastTick: number;
     tickLength: number;
     lastRender: number;
+    lastServerTick: number;
 
     gameOn: boolean;
     gameVariables: CommonTypings.GameVariables;
@@ -31,9 +32,11 @@ class NetworkGame {
 
         this.lastTick = performance.now();
         this.lastRender = this.lastTick; //Pretend the first draw was on first update.
+        this.lastServerTick = 0;
 
         this.gameVariables = gameVariables;
         this.socket = socket;
+        this.initSocketCommands(socket);
         this.lastDirectionChange = moment();
 
         this.tickLength = gameVariables.tickLength; //This sets your simulation to run at 20Hz (50ms)
@@ -107,6 +110,46 @@ class NetworkGame {
         }
 
         this.lastDirectionChange = moment();
+    }
+
+    private initSocketCommands(socket: SocketIOClient.Socket) {
+        socket.on('StartGame', (obj: AchtungCommunication.StartGame) => {
+            textArea.addText('StartGame: ' + obj.timeToStart.toString());
+            obj.mapBox.forEach(mapBox => {
+                this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
+            });
+            this.startGame();
+        });
+
+        socket.on('ServerTick', (obj: AchtungCommunication.ServerTick) => {
+            if (obj.tick <= this.lastServerTick) {
+                return;
+            }
+
+            this.map.mapBox.clear();
+
+            obj.mapBox.forEach(mapBox => {
+                this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
+            });
+
+            this.lastServerTick = obj.tick;
+        });
+
+        socket.on('ServerTick', (obj: AchtungCommunication.ServerTick) => {
+            if (obj.tick <= this.lastServerTick) {
+                return;
+            }
+
+            this.map.mapBox.clear();
+
+            obj.mapBox.forEach(mapBox => {
+                this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
+            });
+
+            this.lastServerTick = obj.tick;
+        });
+
+        socket.emit('PlayerReady', <AchtungCommunication.PlayerReady>{});
     }
 }
 export = NetworkGame;

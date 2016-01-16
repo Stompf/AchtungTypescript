@@ -10,7 +10,6 @@ class ClientPlayer implements CommonTypings.Player {
     position:CommonTypings.Vector2D;
     size: CommonTypings.Size;
     speed: number;
-    //boundingBox: CommonTypings.BoundingBox;
     keyboardStates: KeyboardStates;
 
     isLocalPlayer: boolean;

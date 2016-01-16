@@ -32,6 +32,7 @@
     }
 
     interface MapBox {
+        mapboxID: string;
         player: Player;
     }
 
