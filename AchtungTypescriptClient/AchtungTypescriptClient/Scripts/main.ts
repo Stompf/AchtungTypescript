@@ -33,8 +33,8 @@ requirejs(['game/app'], (app: any) => {
         }
 
         var achtungTypescript = new app(canvas) as AchtungTypescript;
-        //achtungTypescript.startNetwork();
-        achtungTypescript.startLocal();
+        achtungTypescript.startNetwork();
+        //achtungTypescript.startLocal();
         console.log('done');
     }, 1000);
 });

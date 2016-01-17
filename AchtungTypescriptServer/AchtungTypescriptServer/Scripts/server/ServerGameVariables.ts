@@ -1,7 +1,7 @@
 ﻿const serverGameVariables = <CommonTypings.GameVariables>{
     playerSize: <CommonTypings.Size>{
-        height: 3,
-        width: 3
+        height: 15,
+        width: 15
     },
     playerSpeed: 50,
     tickLength: 100

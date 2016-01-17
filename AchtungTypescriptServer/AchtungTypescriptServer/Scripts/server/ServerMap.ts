@@ -13,8 +13,8 @@ class ServerMap {
     constructor() {
         this.playerSize = serverGameVariables.playerSize;
         this.size = <CommonTypings.Size>{
-            width: 300,
-            height: 150
+            width: 1000,
+            height: 600
         };
 
         this.initMapBox();
@@ -52,10 +52,10 @@ class ServerMap {
 
         switch (player.direction) {
             case CommonTypings.Direction.UP:
-                player.position.y += 1;
+                player.position.y -= 1;
                 break;
             case CommonTypings.Direction.DOWN:
-                player.position.y -= 1;
+                player.position.y += 1;
                 break;
             case CommonTypings.Direction.LEFT:
                 player.position.x -= 1;

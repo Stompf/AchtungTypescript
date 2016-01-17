@@ -18,64 +18,24 @@
         this.direction = startDirection;
     }
 
-
     changeDirection(direction: CommonTypings.Direction) {
         const now = new Date().getTime();
 
-        if ((now + this.waitTime) > this.lastDirectionChanged) {
+        if ((now + this.waitTime) < this.lastDirectionChanged) {
             return;
         }     
 
-        switch (direction) {
-            case CommonTypings.Direction.LEFT:
-                this.moveLeft();
-                break;
-            case CommonTypings.Direction.RIGHT:
-                this.moveRight();
-                break;
-            default:
-                break;
+        if (direction === CommonTypings.Direction.UP && this.direction !== CommonTypings.Direction.DOWN) {
+            this.direction = CommonTypings.Direction.UP;
+        } else if (direction === CommonTypings.Direction.DOWN && this.direction !== CommonTypings.Direction.UP) {
+            this.direction = CommonTypings.Direction.DOWN;
+        } else if (direction === CommonTypings.Direction.LEFT && this.direction !== CommonTypings.Direction.RIGHT) {
+            this.direction = CommonTypings.Direction.LEFT;
+        } else if (direction === CommonTypings.Direction.RIGHT && this.direction !== CommonTypings.Direction.LEFT) {
+            this.direction = CommonTypings.Direction.RIGHT;
         }
 
         this.lastDirectionChanged = now;
-    }
-
-    private moveRight() {
-        switch (this.direction) {
-            case CommonTypings.Direction.UP:
-                this.direction = CommonTypings.Direction.LEFT;
-                break;
-            case CommonTypings.Direction.DOWN:
-                this.direction = CommonTypings.Direction.RIGHT;
-                break;
-            case CommonTypings.Direction.RIGHT:
-                this.direction = CommonTypings.Direction.UP;
-                break;
-            case CommonTypings.Direction.LEFT:
-                this.direction = CommonTypings.Direction.DOWN;
-                break;
-            default:
-                break;
-        }
-    }
-
-    private moveLeft() {
-        switch (this.direction) {
-            case CommonTypings.Direction.UP:
-                this.direction = CommonTypings.Direction.RIGHT;
-                break;
-            case CommonTypings.Direction.DOWN:
-                this.direction = CommonTypings.Direction.LEFT;
-                break;
-            case CommonTypings.Direction.RIGHT:
-                this.direction = CommonTypings.Direction.DOWN;
-                break;
-            case CommonTypings.Direction.LEFT:
-                this.direction = CommonTypings.Direction.UP;
-                break;
-            default:
-                break;
-        }
     }
 }
 export = ServerPlayer;

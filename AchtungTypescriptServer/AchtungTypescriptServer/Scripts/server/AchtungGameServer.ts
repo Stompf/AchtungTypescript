@@ -22,7 +22,7 @@ class AchtungServer {
 
         playerSockets.forEach((playerSocket, index) => {
             this.playerSockets.setValue(playerSocket.id, playerSocket);
-            this.players.setValue(playerSocket.id, new ServerPlayer(playerSocket.id, this.colors[index], this.map.getRandomPosition(30), this.getRandomDirection()));
+            this.players.setValue(playerSocket.id, new ServerPlayer(playerSocket.id, this.colors[index], this.map.getRandomPosition(100), this.getRandomDirection()));
             this.initPlayerSocketEvents(playerSocket);
         });
     }

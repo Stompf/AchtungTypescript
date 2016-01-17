@@ -1,5 +1,6 @@
 ﻿import ClientMap = require('./ClientMap');
 import ClientPlayer = require('./ClientPlayer');
+import KeyboardStates = require('./KeyboardStates');
 import textArea = require('./TextArea');
 import moment = require('moment');
 
@@ -92,9 +93,13 @@ class NetworkGame {
         }
 
         let direction: CommonTypings.Direction = null;
-        if (e.keyCode === 65) { //A
+        if (e.keyCode === KeyboardStates.W) {
+            direction = CommonTypings.Direction.UP;
+        } else if (e.keyCode === KeyboardStates.S) {
+            direction = CommonTypings.Direction.DOWN;
+        } else if (e.keyCode === KeyboardStates.A) {
             direction = CommonTypings.Direction.LEFT;
-        } else if (e.keyCode === 83) { //S
+        } else if (e.keyCode === KeyboardStates.D) {
             direction = CommonTypings.Direction.RIGHT;
         } 
 
