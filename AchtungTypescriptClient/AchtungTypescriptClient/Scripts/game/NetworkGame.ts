@@ -114,7 +114,8 @@ class NetworkGame {
 
     private initSocketCommands(socket: SocketIOClient.Socket) {
         socket.on('StartGame', (obj: AchtungCommunication.StartGame) => {
-            textArea.addText('StartGame: ' + obj.timeToStart.toString());
+            const diff = Math.abs(moment.duration(moment().diff(moment(obj.timeToStart))).asSeconds());
+            textArea.addText('Game starting in ' + diff + ' seconds');
             obj.mapBox.forEach(mapBox => {
                 this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
             });

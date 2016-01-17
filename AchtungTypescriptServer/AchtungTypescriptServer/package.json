@@ -10,6 +10,7 @@
   "dependencies": {
     "events": "^1.1.0",
     "express": "^4.13.3",
+    "moment": "^2.11.1",
     "socket.io": "^1.4.4"
   }
 }

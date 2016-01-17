@@ -2,6 +2,7 @@
 import ServerPlayer = require('./ServerPlayer');
 import ServerMap = require('./ServerMap');
 import serverGameVariables = require('./ServerGameVariables');
+import moment = require('moment');
 
 class AchtungServer {
 
@@ -28,41 +29,49 @@ class AchtungServer {
     }
 
     startServer() {
+        const startDate = moment().add(5, 'seconds').toDate();
+
         this.playerSockets.values().forEach(playerSocket => {
             playerSocket.emit('StartGame', <AchtungCommunication.StartGame>{
-                timeToStart: new Date(),
+                timeToStart: startDate,
                 mapBox: this.map.mapBox.values()
             });
         });
 
-        this.interval = setInterval(() => {
-            this.tick++;
+        setTimeout(() => {
 
-            this.players.values().forEach(player => {
-                this.map.movePlayer(player);
-            });
+            this.interval = setInterval(() => {
+                this.tick++;
 
-            const gameOver = this.players.values().filter(player => {
-                return player.isAlive;
-            });
-
-            if (gameOver.length <= 1) {
-                clearTimeout(this.interval);
-                this.playerSockets.values().forEach(playerSocket => {
-                    playerSocket.emit('GameOver', <AchtungCommunication.GameOver>{
-                        mapBox: this.map.mapBox.values(),
-                        winner: gameOver.length === 1 ? gameOver[0] : null
-                    });
+                this.players.values().forEach(player => {
+                    this.map.movePlayer(player);
                 });
-            } else {
-                this.playerSockets.values().forEach(playerSocket => {
-                    playerSocket.emit('ServerTick', <AchtungCommunication.ServerTick>{
-                        tick: this.tick,
-                        mapBox: this.map.mapBox.values()
-                    });
+
+                const gameOver = this.players.values().filter(player => {
+                    return player.isAlive;
                 });
-            }
-        }, serverGameVariables.tickLength);
+
+                if (gameOver.length <= 1) {
+                    clearTimeout(this.interval);
+                    this.playerSockets.values().forEach(playerSocket => {
+                        playerSocket.emit('GameOver', <AchtungCommunication.GameOver>{
+                            mapBox: this.map.mapBox.values(),
+                            winner: gameOver.length === 1 ? gameOver[0] : null
+                        });
+                    });
+                } else {
+                    this.playerSockets.values().forEach(playerSocket => {
+                        playerSocket.emit('ServerTick', <AchtungCommunication.ServerTick>{
+                            tick: this.tick,
+                            mapBox: this.map.mapBox.values()
+                        });
+                    });
+                }
+            }, serverGameVariables.tickLength);
+
+
+        }, startDate.getTime() - new Date().getTime());
+        
     }
 
     private initPlayerSocketEvents(playerSocket: SocketIO.Socket) {
@@ -73,6 +82,10 @@ class AchtungServer {
 
         playerSocket.on('NewDirection', (obj: AchtungCommunication.NewDirection) => {
             this.players.getValue(playerSocket.id).changeDirection(obj.direction);
+        });
+
+        playerSocket.on('disconnect', () => {
+            this.players.getValue(playerSocket.id).isAlive = false;
         });
     }
 

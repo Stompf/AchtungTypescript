@@ -44,6 +44,7 @@
     <TypeScriptCompile Include="Scripts\server\ServerPlayer.ts" />
     <TypeScriptCompile Include="Scripts\typings\express\express.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\mime\mime.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\moment\moment-node.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\serve-static\serve-static.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\socketio\socket.io.d.ts" />
@@ -61,6 +62,7 @@
     <Folder Include="Scripts\typings\" />
     <Folder Include="Scripts\typings\express\" />
     <Folder Include="Scripts\typings\mime\" />
+    <Folder Include="Scripts\typings\moment\" />
     <Folder Include="Scripts\typings\serve-static\" />
     <Folder Include="Scripts\typings\socketio\" />
     <Folder Include="Scripts\typings\node\" />

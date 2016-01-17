@@ -56,6 +56,12 @@ class AchtungTypescript {
 
         this.socket.on('GameFound', (obj: AchtungCommunication.GameFound) => {
             textArea.addText('GameFound! Starting match...');
+            const localPlayer = _.find(obj.players, player => {
+                return player.id === this.socket.id;
+            });
+
+            textArea.addText('Your are player - <div style="color: ' + localPlayer.color + '">' + localPlayer.color + '</div>');
+
             const networkGame = new NetworkGame(this.ctx, obj.players, obj.gameVariables, this.socket);
         });
 
