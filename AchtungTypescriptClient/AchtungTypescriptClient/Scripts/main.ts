@@ -32,6 +32,7 @@ requirejs(['game/app'], (app: any) => {
             return;
         }
 
+        canvas.focus();
         var achtungTypescript = new app(canvas) as AchtungTypescript;
         achtungTypescript.startNetwork();
         //achtungTypescript.startLocal();
