@@ -11,6 +11,7 @@ class NetworkGame {
     playerSize: CommonTypings.Size;
     players: Array<CommonTypings.Player>;
     socket: SocketIOClient.Socket;
+    playerID: string;
 
     stopMain: number;
     lastTick: number;
@@ -24,12 +25,13 @@ class NetworkGame {
     lastDirectionChange: moment.Moment;
     waitTime: number = 500;
 
-    constructor(ctx: CanvasRenderingContext2D, players: Array<CommonTypings.Player>, gameVariables: CommonTypings.GameVariables, socket: SocketIOClient.Socket) {
+    constructor(ctx: CanvasRenderingContext2D, players: Array<CommonTypings.Player>, gameVariables: CommonTypings.GameVariables, socket: SocketIOClient.Socket, playerID: string) {
         this.ctx = ctx;
         this.ctx.canvas.tabIndex = 1;
         this.ctx.canvas.style.outline = "none";
 
         this.players = players;
+        this.playerID = playerID;
 
         this.lastTick = performance.now();
         this.lastRender = this.lastTick; //Pretend the first draw was on first update.
@@ -85,6 +87,12 @@ class NetworkGame {
     private render = (tFrame: number) => {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
         this.map.draw(this.ctx, tFrame);
+
+        if (this.map.mapBox.size() <= this.players.length) {
+            this.players.forEach(player => {
+                this.map.drawDirectionArrow(this.ctx, player.direction, player.position);
+            });
+        }
     }
 
     private onKeyDown(e: KeyboardEvent) {
@@ -134,6 +142,7 @@ class NetworkGame {
             });
 
             this.lastServerTick = obj.tick;
+            this.players = obj.players;
         });
 
         socket.on('GameOver', (obj: AchtungCommunication.GameOver) => {

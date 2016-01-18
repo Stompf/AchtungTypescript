@@ -7,6 +7,7 @@
     interface GameFound {
         gameVariables: CommonTypings.GameVariables;
         players: Array<CommonTypings.Player>;
+        playerID: string;
     }
 
     interface NewDirection {
@@ -25,6 +26,7 @@
     interface ServerTick {
         tick: number;
         mapBox: Array<CommonTypings.MapBox>; 
+        players: Array<CommonTypings.Player>;
     }
 
     interface GameOver {

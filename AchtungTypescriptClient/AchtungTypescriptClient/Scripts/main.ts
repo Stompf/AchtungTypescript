@@ -23,7 +23,7 @@ requirejs.config({
 
 // Start loading the main app file. Put all of
 // your application logic in there.
-requirejs(['game/app'], (app: any) => {
+requirejs(['game/app', 'underscore'], (app: any) => {
 
     setTimeout(() => {
         const canvas = <HTMLCanvasElement>document.getElementById('canvasGame');
@@ -35,7 +35,7 @@ requirejs(['game/app'], (app: any) => {
         canvas.focus();
         var achtungTypescript = new app(canvas) as AchtungTypescript;
         achtungTypescript.startNetwork();
-        //achtungTypescript.startLocal();
+       // achtungTypescript.startLocal();
         console.log('done');
     }, 1000);
 });

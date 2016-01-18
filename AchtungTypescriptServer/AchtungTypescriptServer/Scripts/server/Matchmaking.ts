@@ -48,8 +48,8 @@ class Matchmaking {
         this.socketStatus.setValue(socket1.id, gameID);
         this.socketStatus.setValue(socket2.id, gameID);
 
-        socket1.emit('GameFound', <AchtungCommunication.GameFound>{ gameVariables: serverGameVariables, players: newGame.players.values() });
-        socket2.emit('GameFound', <AchtungCommunication.GameFound>{ gameVariables: serverGameVariables, players: newGame.players.values() });
+        socket1.emit('GameFound', <AchtungCommunication.GameFound>{ gameVariables: serverGameVariables, players: newGame.players.values(), playerID: socket1.id });
+        socket2.emit('GameFound', <AchtungCommunication.GameFound>{ gameVariables: serverGameVariables, players: newGame.players.values(), playerID: socket2.id });
     }
 
     createAchtungGameServerId(ids: Array<string>) {

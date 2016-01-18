@@ -57,13 +57,16 @@ class AchtungTypescript {
         this.socket.on('GameFound', (obj: AchtungCommunication.GameFound) => {
             textArea.addText('GameFound! Starting match...');
             const localPlayer = _.find(obj.players, player => {
-                return player.id === this.socket.id;
+                return player.id === obj.playerID;
             });
 
-            textArea.addText('Your are player - <div style="color: ' + localPlayer.color + '">' + localPlayer.color + '</div>');
+            textArea.addText('Your are player - <span style="color: ' + localPlayer.color + '">' + localPlayer.color + '</span>');
 
-            const networkGame = new NetworkGame(this.ctx, obj.players, obj.gameVariables, this.socket);
+            const networkGame = new NetworkGame(this.ctx, obj.players, obj.gameVariables, this.socket, obj.playerID);
         });
 
+        this.socket.on('disconnect', () => {
+            textArea.addText('Disconnected');
+        });
     }
 } export = AchtungTypescript;

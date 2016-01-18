@@ -13,6 +13,7 @@ class AchtungServer {
     colors: Array<string> = ['blue', 'red', 'black', 'yellow', 'cyan'];
     tick: number;
     interval: NodeJS.Timer;
+    isPaused: boolean;
 
     constructor(id: string, playerSockets: Array<SocketIO.Socket>) {
         this.players = new collections.Dictionary<string, ServerPlayer>();
@@ -20,6 +21,7 @@ class AchtungServer {
         this.id = id;
         this.tick = 0;
         this.map = new ServerMap();
+        this.isPaused = true;
 
         playerSockets.forEach((playerSocket, index) => {
             this.playerSockets.setValue(playerSocket.id, playerSocket);
@@ -30,6 +32,13 @@ class AchtungServer {
 
     startServer() {
         const startDate = moment().add(5, 'seconds').toDate();
+        this.players.values().forEach(player => {
+            const mapBoxId = this.map.toMapBoxId(player.position.x, player.position.y);
+            this.map.mapBox.setValue(mapBoxId, <CommonTypings.MapBox>{
+                mapboxID: mapBoxId,
+                player: player
+            });
+        });
 
         this.playerSockets.values().forEach(playerSocket => {
             playerSocket.emit('StartGame', <AchtungCommunication.StartGame>{
@@ -39,39 +48,40 @@ class AchtungServer {
         });
 
         setTimeout(() => {
+            this.isPaused = false;
+        }, startDate.getTime() - new Date().getTime());
 
-            this.interval = setInterval(() => {
-                this.tick++;
+        this.interval = setInterval(() => {
+            this.tick++;
 
+            if (!this.isPaused) {
                 this.players.values().forEach(player => {
                     this.map.movePlayer(player);
                 });
+            }
 
-                const gameOver = this.players.values().filter(player => {
-                    return player.isAlive;
+            const gameOver = this.players.values().filter(player => {
+                return player.isAlive;
+            });
+
+            if (gameOver.length <= 1) {
+                clearTimeout(this.interval);
+                this.playerSockets.values().forEach(playerSocket => {
+                    playerSocket.emit('GameOver', <AchtungCommunication.GameOver>{
+                        mapBox: this.map.mapBox.values(),
+                        winner: gameOver.length === 1 ? gameOver[0] : null
+                    });
                 });
-
-                if (gameOver.length <= 1) {
-                    clearTimeout(this.interval);
-                    this.playerSockets.values().forEach(playerSocket => {
-                        playerSocket.emit('GameOver', <AchtungCommunication.GameOver>{
-                            mapBox: this.map.mapBox.values(),
-                            winner: gameOver.length === 1 ? gameOver[0] : null
-                        });
+            } else {
+                this.playerSockets.values().forEach(playerSocket => {
+                    playerSocket.emit('ServerTick', <AchtungCommunication.ServerTick>{
+                        tick: this.tick,
+                        mapBox: this.map.mapBox.values(),
+                        players: this.players.values()
                     });
-                } else {
-                    this.playerSockets.values().forEach(playerSocket => {
-                        playerSocket.emit('ServerTick', <AchtungCommunication.ServerTick>{
-                            tick: this.tick,
-                            mapBox: this.map.mapBox.values()
-                        });
-                    });
-                }
-            }, serverGameVariables.tickLength);
-
-
-        }, startDate.getTime() - new Date().getTime());
-        
+                });
+            }
+        }, serverGameVariables.tickLength);
     }
 
     private initPlayerSocketEvents(playerSocket: SocketIO.Socket) {

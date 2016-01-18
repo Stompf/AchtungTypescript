@@ -80,6 +80,12 @@ class ClientGame {
     private render = (tFrame: number) => {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
         this.map.draw(this.ctx, tFrame);
+
+        if (this.map.mapBox.size() <= this.players.length) {
+            this.players.forEach(player => {
+                this.map.drawDirectionArrow(this.ctx, player.direction, player.position);
+            });
+        }
     }
 
     private onBlur() {

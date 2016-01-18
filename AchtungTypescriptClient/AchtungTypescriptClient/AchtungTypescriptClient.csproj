@@ -23,6 +23,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.css" />
+    <Content Include="Img\arrowRight.png" />
+    <Content Include="Img\arrowLeft.png" />
+    <Content Include="Img\arrowDown.png" />
+    <Content Include="Img\arrowUp.png" />
     <Content Include="index.html" />
     <Content Include="packages.config" />
     <None Include="AchtungLunne.pubxml" />
