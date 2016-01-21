@@ -8,9 +8,13 @@
     <script data-main="scripts/main" src="scripts/require.js"></script>
 </head>
 <body>
-    <div style="">
-        <canvas width="1000" height="600" style="border: 1px solid black;" id="canvasGame" tabindex="1"></canvas>
-        <div style="width: 1000px;height: 200px; border: 1px solid #ccc; overflow: auto;" id="canvasGameText" tabindex="2"></div>
+<div id="main">
+    <div>
+        <button data-bind="click: $root.startLocal.bind()">Local</button>
+        <button data-bind="click: $root.startNetwork.bind()">Internet</button>
     </div>
+    <canvas width="1000" height="600" style="border: 1px solid black;" id="canvasGame" tabindex="1"></canvas>
+    <div style="width: 1000px; height: 200px; border: 1px solid #ccc; overflow: auto;" id="canvasGameText" tabindex="2"></div>
+</div>
 </body>
 </html>

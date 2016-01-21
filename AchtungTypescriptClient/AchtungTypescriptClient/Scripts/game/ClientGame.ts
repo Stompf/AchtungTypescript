@@ -20,7 +20,7 @@ class ClientGame {
     constructor(ctx: CanvasRenderingContext2D, players: Array<ClientPlayer>, gameVariables: CommonTypings.GameVariables) {
         this.ctx = ctx;
         this.ctx.canvas.tabIndex = 1;
-        this.ctx.canvas.style.outline = "none";
+        this.ctx.canvas.style.outline = 'none';
 
         this.players = players;
 
@@ -37,12 +37,25 @@ class ClientGame {
     startGame() {
         textArea.addText('startGame');
 
-        window.addEventListener("blur", (e) => { this.onBlur(); }, false);
-        this.ctx.canvas.addEventListener("keydown", (e) => { this.onKeyDown(e); }, false);
-        this.ctx.canvas.addEventListener("keyup", (e) => { this.onKeyUp(e); }, false);
+        window.addEventListener('blur', () => { this.onBlur(); }, false);
+        this.ctx.canvas.addEventListener('keydown', (e) => { this.onKeyDown(e); }, false);
+        this.ctx.canvas.addEventListener('keyup', (e) => { this.onKeyUp(e); }, false);
+
+        this.players.forEach(player => {
+            const mapBoxID = this.map.toMapBoxId(player.position.x, player.position.y);
+            this.map.mapBox.setValue(mapBoxID, <CommonTypings.MapBox>{ player: player, mapboxID: mapBoxID });
+        });
 
         this.mainLoop(performance.now());
-        this.gameOn = true;
+
+        setTimeout(() => {
+            this.gameOn = true;
+        }, 5000);
+    }
+
+    stopGame() {
+        textArea.addText('Game stopped.');
+        window.cancelAnimationFrame(this.stopMain);
     }
 
     private mainLoop = (tFrame: number) => {
@@ -72,6 +85,10 @@ class ClientGame {
     }
 
     private update = (lastTick: number) => {
+        if (!this.gameOn) {
+            return;
+        }
+
         this.players.forEach(player => {
             this.map.movePlayer(player);
         });
@@ -89,7 +106,7 @@ class ClientGame {
     }
 
     private onBlur() {
-        for (var i = 0; i < this.players.length; i++) {
+        for (let i = 0; i < this.players.length; i++) {
             if (this.players[i].keyboardStates != null) {
                 this.players[i].keyboardStates.resetAll();
             }
@@ -97,11 +114,7 @@ class ClientGame {
     }
 
     private onKeyDown(e: KeyboardEvent) {
-        if (!this.gameOn) {
-            return;
-        }
-
-        for (var i = 0; i < this.players.length; i++) {
+        for (let i = 0; i < this.players.length; i++) {
             if (this.players[i].keyboardStates != null && this.players[i].keyboardStates.keyDown(e.keyCode)) {
                 break;
             }
@@ -109,11 +122,7 @@ class ClientGame {
     }
 
     private onKeyUp(e: KeyboardEvent) {
-        if (!this.gameOn) {
-            return;
-        }
-
-        for (var i = 0; i < this.players.length; i++) {
+        for (let i = 0; i < this.players.length; i++) {
             if (this.players[i].keyboardStates != null && this.players[i].keyboardStates.keyUp(e.keyCode)) {
                 break;
             }
