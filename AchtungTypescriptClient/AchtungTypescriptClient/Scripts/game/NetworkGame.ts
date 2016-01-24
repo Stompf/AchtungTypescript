@@ -25,7 +25,7 @@ class NetworkGame {
     lastDirectionChange: moment.Moment;
     waitTime: number = 500;
 
-    constructor(ctx: CanvasRenderingContext2D, players: Array<CommonTypings.Player>, gameVariables: CommonTypings.GameVariables, socket: SocketIOClient.Socket, playerID: string) {
+    constructor(ctx: CanvasRenderingContext2D, players: Array<CommonTypings.Player>, gameVariables: CommonTypings.GameVariables, playerID: string) {
         this.ctx = ctx;
         this.ctx.canvas.tabIndex = 1;
         this.ctx.canvas.style.outline = "none";
@@ -38,8 +38,6 @@ class NetworkGame {
         this.lastServerTick = 0;
 
         this.gameVariables = gameVariables;
-        this.socket = socket;
-        this.initSocketCommands(socket);
         this.lastDirectionChange = moment();
 
         this.tickLength = gameVariables.tickLength; //This sets your simulation to run at 20Hz (50ms)
@@ -47,7 +45,51 @@ class NetworkGame {
         this.map = new ClientMap(this.ctx.canvas.width, this.ctx.canvas.height, this.gameVariables.playerSize);
     }
 
-    startGame() {
+    initSocketCommands(socket: SocketIOClient.Socket) {
+        socket.on('StartGame', (obj: AchtungCommunication.StartGame) => {
+            const diff = Math.abs(moment.duration(moment().diff(moment(obj.timeToStart))).asSeconds());
+            textArea.addText('Game starting in ' + diff + ' seconds');
+            obj.mapBox.forEach(mapBox => {
+                this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
+            });
+            this.startGame();
+        });
+
+        socket.on('ServerTick', (obj: AchtungCommunication.ServerTick) => {
+            if (obj.tick <= this.lastServerTick) {
+                return;
+            }
+
+            this.map.mapBox.clear();
+
+            obj.mapBox.forEach(mapBox => {
+                this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
+            });
+
+            this.lastServerTick = obj.tick;
+            this.players = obj.players;
+        });
+
+        socket.on('GameOver', (obj: AchtungCommunication.GameOver) => {
+            this.map.mapBox.clear();
+
+            obj.mapBox.forEach(mapBox => {
+                this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
+            });
+
+            window.cancelAnimationFrame(this.stopMain);
+
+            if (obj.winner != null) {
+                textArea.addText(obj.winner.color + ' (' + obj.winner.id + ') won!');
+            } else {
+                textArea.addText('Its a draw!');
+            }
+        });
+
+        socket.emit('PlayerReady', <AchtungCommunication.PlayerReady>{});
+    }
+
+    private startGame() {
         this.ctx.canvas.addEventListener("keydown", (e) => { this.onKeyDown(e); }, false);
 
         this.mainLoop(performance.now());
@@ -120,48 +162,6 @@ class NetworkGame {
         this.lastDirectionChange = moment();
     }
 
-    private initSocketCommands(socket: SocketIOClient.Socket) {
-        socket.on('StartGame', (obj: AchtungCommunication.StartGame) => {
-            const diff = Math.abs(moment.duration(moment().diff(moment(obj.timeToStart))).asSeconds());
-            textArea.addText('Game starting in ' + diff + ' seconds');
-            obj.mapBox.forEach(mapBox => {
-                this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
-            });
-            this.startGame();
-        });
-
-        socket.on('ServerTick', (obj: AchtungCommunication.ServerTick) => {
-            if (obj.tick <= this.lastServerTick) {
-                return;
-            }
-
-            this.map.mapBox.clear();
-
-            obj.mapBox.forEach(mapBox => {
-                this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
-            });
-
-            this.lastServerTick = obj.tick;
-            this.players = obj.players;
-        });
-
-        socket.on('GameOver', (obj: AchtungCommunication.GameOver) => {
-            this.map.mapBox.clear();
-
-            obj.mapBox.forEach(mapBox => {
-                this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
-            });
-
-            window.cancelAnimationFrame(this.stopMain);
-
-            if (obj.winner != null) {
-                textArea.addText(obj.winner.color + ' (' + obj.winner.id + ') won!');
-            } else {
-                textArea.addText('Its a draw!');
-            }
-        });
-
-        socket.emit('PlayerReady', <AchtungCommunication.PlayerReady>{});
-    }
+  
 }
 export = NetworkGame;

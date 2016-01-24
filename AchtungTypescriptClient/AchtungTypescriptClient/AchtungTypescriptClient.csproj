@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\collections.ts" />
-    <TypeScriptCompile Include="Scripts\game\app.ts" />
+    <TypeScriptCompile Include="Scripts\game\AchtungTypescript.ts" />
     <Content Include="Scripts\socket.io-client.js" />
     <TypeScriptCompile Include="Scripts\game\NetworkGame.ts" />
     <TypeScriptCompile Include="Scripts\game\ClientGame.ts" />

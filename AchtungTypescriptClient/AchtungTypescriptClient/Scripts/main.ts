@@ -4,7 +4,7 @@
 // except for 'app' ones, which are in a sibling
 // directory.
 
-import AchtungTypescript = require('./game/app');
+import AchtungTypescript = require('./game/AchtungTypescript');
 
 requirejs.config({
     urlArgs: "bust=" + (new Date()).getTime(),
@@ -23,10 +23,10 @@ requirejs.config({
 
 // Start loading the main app file. Put all of
 // your application logic in there.
-requirejs(['game/app', 'underscore'], (app: any) => {
+requirejs(['game/AchtungTypescript', 'underscore'], (app: any) => {
 
     setTimeout(() => {
-        const canvas = <HTMLCanvasElement>document.getElementById('canvasGame');
+        const canvas = document.getElementById('canvasGame') as HTMLCanvasElement;
         if (canvas == null) {
             alert('could not find canvas!');
             return;

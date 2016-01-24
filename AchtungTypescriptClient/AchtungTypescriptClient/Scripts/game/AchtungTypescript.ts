@@ -72,7 +72,8 @@ class AchtungTypescript {
 
             textArea.addText('Your are player - <span style="color: ' + localPlayer.color + '">' + localPlayer.color + '</span>');
 
-            const networkGame = new NetworkGame(this.ctx, obj.players, obj.gameVariables, this.socket, obj.playerID);
+            const networkGame = new NetworkGame(this.ctx, obj.players, obj.gameVariables, obj.playerID);
+            networkGame.initSocketCommands(this.socket);
         });
 
         this.socket.on('disconnect', () => {
