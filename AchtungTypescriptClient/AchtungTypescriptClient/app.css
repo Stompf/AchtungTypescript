@@ -1,7 +1,12 @@
 ﻿body {
-    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center; /* !!! */
 }
 
-span {
-    font-style: italic;
+.centered {
+    margin: 0 auto;
+    text-align: left;
+    width: 1000px;
+    margin-top: 5px;
 }

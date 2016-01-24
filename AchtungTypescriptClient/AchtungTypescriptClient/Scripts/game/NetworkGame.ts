@@ -1,5 +1,4 @@
 ﻿import ClientMap = require('./ClientMap');
-import ClientPlayer = require('./ClientPlayer');
 import KeyboardStates = require('./KeyboardStates');
 import textArea = require('./TextArea');
 import moment = require('moment');
@@ -28,7 +27,7 @@ class NetworkGame {
     constructor(ctx: CanvasRenderingContext2D, players: Array<CommonTypings.Player>, gameVariables: CommonTypings.GameVariables, playerID: string) {
         this.ctx = ctx;
         this.ctx.canvas.tabIndex = 1;
-        this.ctx.canvas.style.outline = "none";
+        this.ctx.canvas.style.outline = 'none';
 
         this.players = players;
         this.playerID = playerID;
@@ -116,7 +115,7 @@ class NetworkGame {
     }
 
     private queueUpdates = (numTicks: number) => {
-        for (var i = 0; i < numTicks; i++) {
+        for (let i = 0; i < numTicks; i++) {
             this.lastTick = this.lastTick + this.tickLength; //Now lastTick is this tick.
             this.update(this.lastTick);
         }

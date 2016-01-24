@@ -8,6 +8,8 @@ import textArea = require('./TextArea');
 import ko = require('knockout');
 
 class AchtungTypescript {
+    currentStep: KnockoutObservable<string>;
+
     canvasElement: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
 
@@ -17,6 +19,7 @@ class AchtungTypescript {
     networkAddress = 'http://lunne.noip.me:3000';
 
     constructor(canvas: HTMLCanvasElement) {
+        this.currentStep = ko.observable('main');
         this.canvasElement = canvas;
         this.ctx = canvas.getContext('2d');
     }
