@@ -20,12 +20,12 @@
     }
 
     interface PlayerReady {
-        
+
     }
 
     interface ServerTick {
         tick: number;
-        mapBox: Array<CommonTypings.MapBox>; 
+        mapBox: Array<CommonTypings.MapBox>;
         players: Array<CommonTypings.Player>;
     }
 

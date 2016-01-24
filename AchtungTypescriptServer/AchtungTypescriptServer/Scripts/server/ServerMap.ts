@@ -93,4 +93,5 @@ class ServerMap {
         this.mapBoxPartsHeight = Math.floor(this.size.height / this.playerSize.height);
     }
 }
+
 export = ServerMap;

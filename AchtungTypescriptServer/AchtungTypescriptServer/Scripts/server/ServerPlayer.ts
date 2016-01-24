@@ -23,7 +23,7 @@
 
         if ((now + this.waitTime) < this.lastDirectionChanged) {
             return;
-        }     
+        }
 
         if (direction === CommonTypings.Direction.UP && this.direction !== CommonTypings.Direction.DOWN) {
             this.direction = CommonTypings.Direction.UP;
@@ -38,4 +38,5 @@
         this.lastDirectionChanged = now;
     }
 }
+
 export = ServerPlayer;

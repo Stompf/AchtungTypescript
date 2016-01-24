@@ -42,7 +42,9 @@ class Matchmaking {
         this.queuedConnections.remove(socket1.id);
         this.queuedConnections.remove(socket2.id);
 
-        const gameID = this.createAchtungGameServerId([socket1, socket2].map(socket => { return socket.id; }));
+        const gameID = this.createAchtungGameServerId([socket1, socket2].map(socket => {
+            return socket.id;
+        }));
         const newGame = new AchtungGameServer(gameID, [socket1, socket2]);
 
         this.socketStatus.setValue(socket1.id, gameID);
@@ -61,9 +63,10 @@ class Matchmaking {
             while (gameId === '' || this.currentGames.containsKey(gameId)) {
                 gameId = ids.join('_') + '_' + idInstance;
                 idInstance++;
-            } 
+            }
             return gameId;
         }
     }
 }
+
 export = Matchmaking;
