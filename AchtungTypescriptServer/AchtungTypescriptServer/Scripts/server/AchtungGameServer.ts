@@ -13,6 +13,7 @@ class AchtungServer {
     colors: Array<string> = ['blue', 'red', 'black', 'yellow', 'cyan'];
     tick: number;
     interval: NodeJS.Timer;
+    startTimeout: NodeJS.Timer;
     isPaused: boolean;
 
     constructor(id: string, playerSockets: Array<SocketIO.Socket>) {
@@ -47,7 +48,7 @@ class AchtungServer {
             });
         });
 
-        setTimeout(() => {
+        this.startTimeout = setTimeout(() => {
             this.isPaused = false;
         }, startDate.getTime() - new Date().getTime());
 
@@ -65,7 +66,7 @@ class AchtungServer {
             });
 
             if (gameOver.length <= 1) {
-                clearTimeout(this.interval);
+                clearInterval(this.interval);
                 this.playerSockets.values().forEach(playerSocket => {
                     playerSocket.emit('GameOver', <AchtungCommunication.GameOver>{
                         mapBox: this.map.mapBox.values(),
@@ -82,6 +83,17 @@ class AchtungServer {
                 });
             }
         }, serverGameVariables.tickLength);
+    }
+
+    stopGame() {
+        clearTimeout(this.startTimeout);
+        clearInterval(this.interval);
+        this.playerSockets.values().forEach(playerSocket => {
+            playerSocket.emit('GameOver', <AchtungCommunication.GameOver>{
+                mapBox: this.map.mapBox.values(),
+                winner: null
+            });
+        });
     }
 
     private initPlayerSocketEvents(playerSocket: SocketIO.Socket) {
