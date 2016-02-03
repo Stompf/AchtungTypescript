@@ -26,14 +26,7 @@ requirejs.config({
 // Start loading the main app file. Put all of
 // your application logic in there.
 requirejs(['game/AchtungTypescript', 'jquery', 'underscore', 'bootstrap'], (app: any) => {
-    const canvas = document.getElementById('canvasGame') as HTMLCanvasElement;
-    if (canvas == null) {
-        alert('could not find canvas!');
-        return;
-    }
-
-    canvas.focus();
-    var achtungTypescript = new app(canvas) as AchtungTypescript;
+    var achtungTypescript = new app() as AchtungTypescript;
     achtungTypescript.init();
     console.log('done');
 });

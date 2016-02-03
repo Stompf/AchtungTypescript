@@ -18,10 +18,10 @@ class AchtungTypescript {
 
     networkAddress = 'http://lunne.noip.me:3000';
 
-    constructor(canvas: HTMLCanvasElement) {
+    constructor() {
         this.currentStep = ko.observable('main');
-        this.canvasElement = canvas;
-        this.ctx = canvas.getContext('2d');
+        //this.canvasElement = canvas;
+        //this.ctx = canvas.getContext('2d');
     }
 
     init() {
@@ -31,6 +31,12 @@ class AchtungTypescript {
     }
 
     startNetwork = () => {
+        this.currentStep('game');
+
+        if (!this.setupCanvas()) {
+            return;
+        }
+
         textArea.clearText();
         textArea.addText('Connecting to LunneNET...');
         this.socket = socketIO(this.networkAddress);
@@ -39,6 +45,12 @@ class AchtungTypescript {
     }
 
     startLocal = () => {
+        this.currentStep('game');
+
+        if (!this.setupCanvas()) {
+            return;
+        }
+
         if (this.currentGame) {
             this.currentGame.stopGame();
         }
@@ -56,6 +68,19 @@ class AchtungTypescript {
         });
 
         this.currentGame.startGame();
+    }
+
+    private setupCanvas() {
+        const canvas = document.getElementById('canvasGame') as HTMLCanvasElement;
+        if (canvas == null) {
+            alert('could not find canvas!');
+            return false;
+        }
+
+        canvas.focus();
+        this.canvasElement = canvas;
+        this.ctx = canvas.getContext('2d');
+        return true;
     }
 
     private initAchtungCommands() {

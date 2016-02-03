@@ -78,7 +78,7 @@ class ClientGame {
     }
 
     private queueUpdates = (numTicks: number) => {
-        for (var i = 0; i < numTicks; i++) {
+        for (let i = 0; i < numTicks; i++) {
             this.lastTick = this.lastTick + this.tickLength; //Now lastTick is this tick.
             this.update(this.lastTick);
         }
