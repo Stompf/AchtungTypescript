@@ -5,10 +5,12 @@ import ClientPlayer = require('./ClientPlayer');
 import KeyboardStates = require('./KeyboardStates');
 import localGameVariables = require('./LocalGameVariables');
 import textArea = require('./TextArea');
+import CustomGameSetup = require('./CustomGameSetup');
 import ko = require('knockout');
 
 class AchtungTypescript {
     currentStep: KnockoutObservable<string>;
+    customGameSetup: CustomGameSetup;
 
     canvasElement: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
@@ -20,8 +22,7 @@ class AchtungTypescript {
 
     constructor() {
         this.currentStep = ko.observable('main');
-        //this.canvasElement = canvas;
-        //this.ctx = canvas.getContext('2d');
+        this.customGameSetup = new CustomGameSetup();
     }
 
     init() {
@@ -29,6 +30,13 @@ class AchtungTypescript {
         ko.cleanNode(element);
         ko.applyBindings(this, element);
     }
+
+    backToMainMenu = () => {
+        if (this.currentGame) {
+            this.currentGame.stopGame();
+        }
+        this.currentStep('main');
+    };
 
     startNetwork = () => {
         this.currentStep('game');
@@ -45,29 +53,30 @@ class AchtungTypescript {
     }
 
     startLocal = () => {
-        this.currentStep('game');
+        this.currentStep('setup');
+        //this.currentStep('game');
 
-        if (!this.setupCanvas()) {
-            return;
-        }
+        //if (!this.setupCanvas()) {
+        //    return;
+        //}
 
-        if (this.currentGame) {
-            this.currentGame.stopGame();
-        }
+        //if (this.currentGame) {
+        //    this.currentGame.stopGame();
+        //}
 
-        textArea.clearText();
-        const localPlayer1 = new ClientPlayer('local_1', 'blue', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.A, right: KeyboardStates.D, up: KeyboardStates.W, down: KeyboardStates.S });
-        const localPlayer2 = new ClientPlayer('local_2', 'red', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.ArrowLeft, right: KeyboardStates.ArrowRight, up: KeyboardStates.ArrowUp, down: KeyboardStates.ArrowDown });
+        //textArea.clearText();
+        //const localPlayer1 = new ClientPlayer('local_1', 'blue', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.A, right: KeyboardStates.D, up: KeyboardStates.W, down: KeyboardStates.S });
+        //const localPlayer2 = new ClientPlayer('local_2', 'red', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.ArrowLeft, right: KeyboardStates.ArrowRight, up: KeyboardStates.ArrowUp, down: KeyboardStates.ArrowDown });
 
-        const localPlayers = [localPlayer1, localPlayer2];
+        //const localPlayers = [localPlayer1, localPlayer2];
 
-        this.currentGame = new ClientGame(this.ctx, localPlayers, localGameVariables);
+        //this.currentGame = new ClientGame(this.ctx, localPlayers, localGameVariables);
 
-        localPlayers.forEach(player => {
-            player.position = this.currentGame.map.getRandomPosition(50);
-        });
+        //localPlayers.forEach(player => {
+        //    player.position = this.currentGame.map.getRandomPosition(50);
+        //});
 
-        this.currentGame.startGame();
+        //this.currentGame.startGame();
     }
 
     private setupCanvas() {

@@ -10,3 +10,19 @@
     width: 1000px;
     margin-top: 5px;
 }
+
+.mainMenu {
+    margin-top: 10%;
+    padding-left: 35%;
+}
+
+.mainHeader {
+    width: 350px;
+    text-align: center;
+    font-size: 35px;
+}
+
+.mainButton {
+    font-size: 30px;
+    width: 350px;
+}

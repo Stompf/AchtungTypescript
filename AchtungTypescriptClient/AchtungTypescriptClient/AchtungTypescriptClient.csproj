@@ -27,6 +27,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="CustomGameSetup.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Img\arrowRight.png" />
     <Content Include="Img\arrowLeft.png" />
@@ -66,6 +67,7 @@
     <TypeScriptCompile Include="Scripts\collections.ts" />
     <TypeScriptCompile Include="Scripts\game\AchtungTypescript.ts" />
     <Content Include="Scripts\socket.io-client.js" />
+    <TypeScriptCompile Include="Scripts\game\CustomGameSetup.ts" />
     <TypeScriptCompile Include="Scripts\game\NetworkGame.ts" />
     <TypeScriptCompile Include="Scripts\game\ClientGame.ts" />
     <TypeScriptCompile Include="Scripts\game\ClientMap.ts" />
@@ -97,6 +99,12 @@
     <None Include="web.Release.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
