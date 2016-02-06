@@ -1,4 +1,6 @@
-﻿import socketIO = require('socket.io-client');
+﻿///<amd-dependency path="../knockoutBindings/KnockoutBindings" />
+
+import socketIO = require('socket.io-client');
 import ClientGame = require('./ClientGame');
 import NetworkGame = require('./NetworkGame');
 import ClientPlayer = require('./ClientPlayer');
@@ -53,6 +55,7 @@ class AchtungTypescript {
     }
 
     startLocal = () => {
+
         this.currentStep('setup');
         //this.currentStep('game');
 

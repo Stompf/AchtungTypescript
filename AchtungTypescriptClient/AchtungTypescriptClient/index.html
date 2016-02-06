@@ -30,7 +30,7 @@
             </div>
         </div>
         <div data-bind="visible: $root.currentStep() === 'setup'">
-            @Html.Partial("CustomGameSetup")
+            <iframe id="setup" style="border: 0;" src="CustomGameSetup.html" data-bind="bindIframe: $root.customGameSetup"></iframe>
         </div>
         <div data-bind="visible: $root.currentStep() === 'game'">
             <div>

@@ -75,6 +75,8 @@
     <TypeScriptCompile Include="Scripts\game\KeyboardStates.ts" />
     <TypeScriptCompile Include="Scripts\game\LocalGameVariables.ts" />
     <TypeScriptCompile Include="Scripts\game\TextArea.ts" />
+    <TypeScriptCompile Include="Scripts\knockoutBindings\KnockoutBindings.d.ts" />
+    <TypeScriptCompile Include="Scripts\knockoutBindings\KnockoutBindings.ts" />
     <TypeScriptCompile Include="Scripts\main.ts" />
     <TypeScriptCompile Include="Scripts\typings\bootstrap\bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\ClientTypings.d.ts" />
