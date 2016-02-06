@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AchtungTypescriptClient", "AchtungTypescriptClient\AchtungTypescriptClient.csproj", "{FF3F493C-D096-4069-A758-0A5F315575DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AchtungTypescriptClientSPA", "AchtungTypescriptClientSPA\AchtungTypescriptClientSPA.csproj", "{B32C87A2-9F90-45E0-B8C2-7C5766F48E44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FF3F493C-D096-4069-A758-0A5F315575DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF3F493C-D096-4069-A758-0A5F315575DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF3F493C-D096-4069-A758-0A5F315575DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF3F493C-D096-4069-A758-0A5F315575DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B32C87A2-9F90-45E0-B8C2-7C5766F48E44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B32C87A2-9F90-45E0-B8C2-7C5766F48E44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B32C87A2-9F90-45E0-B8C2-7C5766F48E44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B32C87A2-9F90-45E0-B8C2-7C5766F48E44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

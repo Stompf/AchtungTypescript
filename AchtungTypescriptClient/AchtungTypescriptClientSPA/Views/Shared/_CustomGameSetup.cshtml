@@ -1,0 +1,17 @@
+﻿<div>
+    <div class="form-inline">
+        <div class="form-group">
+            <label>Max players:</label>
+            <select data-bind="options: $data.maxPlayersOptions, value: $data.maxPlayers"></select>
+        </div>
+    </div>
+    <div class="form-inline">
+        <div class="form-group">
+            <label>AI players:</label>
+            <select data-bind="options: $data.aiPlayersOptions, value: $data.aiPlayers"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" data-bind="click: $data.startGameClicked.bind()">Start Game</button>
+    </div>
+</div>
