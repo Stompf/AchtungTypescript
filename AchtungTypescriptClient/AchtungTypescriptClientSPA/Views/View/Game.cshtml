@@ -1,25 +1,26 @@
-﻿
-<div data-bind="visible: $root.currentStep() === 'main'" class="mainMenu">
-    <div class="form-group">
-        <button class="btn btn-primary mainButton" data-bind="click: $root.startNetwork.bind()">Matchmaking</button><br />
+﻿<div class="achtungMainGame">
+    <div data-bind="visible: $root.currentStep() === 'main'" class="mainMenu">
+        <div class="form-group">
+            <button class="btn btn-primary mainButton" data-bind="click: $root.startNetwork.bind()">Matchmaking</button><br />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary mainButton" data-bind="click: $root.startNetwork.bind()">Custom Online</button>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary mainButton" data-bind="click: $root.startLocal.bind()">Local</button>
+        </div>
     </div>
-    <div class="form-group">
-        <button class="btn btn-primary mainButton" data-bind="click: $root.startNetwork.bind()">Custom Online</button>
+    <div data-bind="visible: $root.currentStep() === 'setup', with: $root.customGameSetup">
+        @Html.Partial("_CustomGameSetup")
     </div>
-    <div class="form-group">
-        <button class="btn btn-primary mainButton" data-bind="click: $root.startLocal.bind()">Local</button>
-    </div>
-</div>
-<div data-bind="visible: $root.currentStep() === 'setup', with: $root.customGameSetup">
-    @Html.Partial("_CustomGameSetup")
-</div>
-<div data-bind="visible: $root.currentStep() === 'game'">
-    <div>
-        <button class="btn btn-primary" data-bind="click: $root.backToMainMenu.bind()">Main Menu</button>
-        <button class="btn btn-primary" data-bind="click: $root.startLocal.bind()">Restart</button>
-    </div>
-    <div>
-        <canvas width="1000" height="600" style="border: 1px solid black;" id="canvasGame" tabindex="1"></canvas>
-        <div style="width: 1000px; height: 200px; border: 1px solid #ccc; overflow: auto;" id="canvasGameText" tabindex="2"></div>
+    <div data-bind="visible: $root.currentStep() === 'game'">
+        <div>
+            <button class="btn btn-primary" data-bind="click: $root.backToMainMenu.bind()">Main Menu</button>
+            <button class="btn btn-primary" data-bind="click: $root.startLocal.bind()">Restart</button>
+        </div>
+        <div>
+            <canvas width="1000" height="600" style="border: 1px solid black;" id="canvasGame" tabindex="1"></canvas>
+            <div style="width: 1000px; height: 200px; border: 1px solid #ccc; overflow: auto;" id="canvasGameText" tabindex="2"></div>
+        </div>
     </div>
 </div>

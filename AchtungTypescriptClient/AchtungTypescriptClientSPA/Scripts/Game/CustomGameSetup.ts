@@ -6,7 +6,7 @@ class CustomGameSetup {
     maxPlayersOptions: KnockoutObservableArray<number>;
     aiPlayers: KnockoutObservable<number>;
     aiPlayersOptions: KnockoutObservableArray<number>;
-    roundsCount: KnockoutObservable<number>;
+    roundsToWin: KnockoutObservable<number>;
     gameMode: KnockoutObservable<string>;
     playerSpeed: KnockoutObservable<number>;
     playerSize: KnockoutObservable<number>;
@@ -25,8 +25,8 @@ class CustomGameSetup {
         this.maxPlayers = ko.observable<number>(1);
         this.maxPlayersOptions = ko.observableArray<number>([1, 2, 3, 4, 5, 6, 7, 8]);
         this.aiPlayers = ko.observable<number>(0);
-        this.aiPlayersOptions = ko.observableArray<number>([1, 2, 3, 4, 5, 6, 7, 8]);
-        this.roundsCount = ko.observable<number>(5);
+        this.aiPlayersOptions = ko.observableArray<number>([0, 1, 2, 3, 4, 5, 6, 7, 8]);
+        this.roundsToWin = ko.observable<number>(5);
         this.gameMode = ko.observable<string>('normal');
         this.playerSpeed = ko.observable<number>(50);
         this.playerSize = ko.observable<number>(15);

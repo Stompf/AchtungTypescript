@@ -38,3 +38,8 @@ textarea {
     font-size: 30px;
     width: 350px;
 }
+
+
+.achtungMainGame .form-group {
+    margin-bottom: 15px;
+}
