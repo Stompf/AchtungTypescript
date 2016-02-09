@@ -1,16 +1,13 @@
 ﻿import $ = require('jquery');
 
 module TextArea {
-
-    const $element = $('#canvasGameText');
-
     export function clearText() {
-        $element.html('');
+        $('#canvasGameText').html('');
     }
 
     export function addText(str: string) {
         const newRow = '<div>' + str + '</div>';
-        $element.html(newRow + $element.html());
+        $('#canvasGameText').html(newRow + $('#canvasGameText').html());
     }
 }
 export = TextArea;

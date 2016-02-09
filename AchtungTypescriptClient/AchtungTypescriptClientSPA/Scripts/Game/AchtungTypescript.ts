@@ -1,5 +1,6 @@
 ﻿///<amd-dependency path="../knockoutBindings/KnockoutBindings" />
 
+import AppMain = require('../app/appMain');
 import socketIO = require('socket.io-client');
 import ClientGame = require('./ClientGame');
 import NetworkGame = require('./NetworkGame');
@@ -11,6 +12,7 @@ import CustomGameSetup = require('./CustomGameSetup');
 import ko = require('knockout');
 
 class AchtungTypescript {
+    appMain: AppMain;
     currentStep: KnockoutObservable<string>;
     customGameSetup: CustomGameSetup;
 
@@ -22,9 +24,14 @@ class AchtungTypescript {
 
     networkAddress = 'http://lunne.noip.me:3000';
 
-    constructor() {
+    constructor(appMain: AppMain) {
+        this.appMain = appMain;
         this.currentStep = ko.observable('main');
-        this.customGameSetup = new CustomGameSetup();
+        this.customGameSetup = new CustomGameSetup(this);
+    }
+
+    activate() {
+       
     }
 
     backToMainMenu = () => {
@@ -48,33 +55,35 @@ class AchtungTypescript {
         this.initAchtungCommands();
     }
 
-    startLocal = () => {
-
+    setupLocal = () => {
         this.currentStep('setup');
-        //this.currentStep('game');
+    };
 
-        //if (!this.setupCanvas()) {
-        //    return;
-        //}
+    startLocalGame = () => {
+        this.currentStep('game');
 
-        //if (this.currentGame) {
-        //    this.currentGame.stopGame();
-        //}
+        if (!this.setupCanvas()) {
+            return;
+        }
 
-        //textArea.clearText();
-        //const localPlayer1 = new ClientPlayer('local_1', 'blue', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.A, right: KeyboardStates.D, up: KeyboardStates.W, down: KeyboardStates.S });
-        //const localPlayer2 = new ClientPlayer('local_2', 'red', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.ArrowLeft, right: KeyboardStates.ArrowRight, up: KeyboardStates.ArrowUp, down: KeyboardStates.ArrowDown });
+        if (this.currentGame) {
+            this.currentGame.stopGame();
+        }
 
-        //const localPlayers = [localPlayer1, localPlayer2];
+        textArea.clearText();
+        const localPlayer1 = new ClientPlayer('local_1', 'blue', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.A, right: KeyboardStates.D, up: KeyboardStates.W, down: KeyboardStates.S });
+        const localPlayer2 = new ClientPlayer('local_2', 'red', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.ArrowLeft, right: KeyboardStates.ArrowRight, up: KeyboardStates.ArrowUp, down: KeyboardStates.ArrowDown });
 
-        //this.currentGame = new ClientGame(this.ctx, localPlayers, localGameVariables);
+        const localPlayers = [localPlayer1, localPlayer2];
 
-        //localPlayers.forEach(player => {
-        //    player.position = this.currentGame.map.getRandomPosition(50);
-        //});
+        this.currentGame = new ClientGame(this.ctx, localPlayers, localGameVariables);
 
-        //this.currentGame.startGame();
-    }
+        localPlayers.forEach(player => {
+            player.position = this.currentGame.map.getRandomPosition(50);
+        });
+
+        this.currentGame.startGame();
+    };
 
     private setupCanvas() {
         const canvas = document.getElementById('canvasGame') as HTMLCanvasElement;
@@ -114,4 +123,5 @@ class AchtungTypescript {
             textArea.addText('Disconnected');
         });
     }
-} export = AchtungTypescript;
+}
+export = AchtungTypescript;

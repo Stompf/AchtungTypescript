@@ -36,6 +36,14 @@
         player: Player;
     }
 
+    interface GameOptions {
+        players: Array<CommonTypings.Player>;
+        roundsToWin: number;
+        playerSpeed: number;
+        playerSize: number;
+
+    }
+
     const enum Direction {
         UP,
         DOWN,

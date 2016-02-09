@@ -1,4 +1,6 @@
 ﻿import ko = require('knockout');
+import AchtungTypescript = require('./AchtungTypescript');
+import textArea = require('./TextArea');
 
 class CustomGameSetup {
 
@@ -21,7 +23,10 @@ class CustomGameSetup {
     playerHost: CommonTypings.Player;
     chat: KnockoutObservableArray<string>;
 
-    constructor() {
+    private achtungTypescript: AchtungTypescript;
+
+    constructor(achtungTypescript: AchtungTypescript) {
+        this.achtungTypescript = achtungTypescript;
         this.maxPlayers = ko.observable<number>(1);
         this.maxPlayersOptions = ko.observableArray<number>([1, 2, 3, 4, 5, 6, 7, 8]);
         this.aiPlayers = ko.observable<number>(0);
@@ -43,12 +48,20 @@ class CustomGameSetup {
     }
 
     startGameClicked = () => {
-
+        this.achtungTypescript.startLocalGame();
     };
 
     backToMainMenuClicked = () => {
 
     };
+
+    getOptions() {
+        return <CommonTypings.GameOptions>{
+            roundsToWin: this.roundsToWin(),
+            playerSize: this.playerSize(),
+            playerSpeed: this.playerSpeed()
+        };
+    }
 
 }
 export = CustomGameSetup;
