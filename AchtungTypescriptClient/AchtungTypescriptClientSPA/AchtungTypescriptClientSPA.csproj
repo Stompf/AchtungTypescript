@@ -180,6 +180,10 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Images\arrowDown.png" />
+    <Content Include="Images\arrowLeft.png" />
+    <Content Include="Images\arrowRight.png" />
+    <Content Include="Images\arrowUp.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
@@ -267,7 +271,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
     <Folder Include="Scripts\viewModels\" />
   </ItemGroup>
   <ItemGroup>
