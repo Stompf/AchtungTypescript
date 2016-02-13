@@ -44,7 +44,7 @@
     <TypeScriptCompile Include="Scripts\server\ServerPlayer.ts" />
     <TypeScriptCompile Include="Scripts\typings\express\express.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\mime\mime.d.ts" />
-    <TypeScriptCompile Include="..\..\AchtungTypescriptClient\AchtungTypescriptClient\Scripts\typings\moment\moment-node.d.ts">
+    <TypeScriptCompile Include="..\..\AchtungTypescriptClient\AchtungTypescriptClientSPA\Scripts\typings\moment\moment-node.d.ts">
       <Link>Scripts\typings\moment\moment-node.d.ts</Link>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
