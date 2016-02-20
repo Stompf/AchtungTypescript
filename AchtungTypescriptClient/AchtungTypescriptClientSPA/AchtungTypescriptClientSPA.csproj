@@ -204,13 +204,13 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sammy-0.7.5.js" />
     <Content Include="Scripts\sammy-0.7.5.min.js" />
+    <Content Include="Scripts\underscore.min.map" />
     <None Include="Views\Shared\_CustomGameSetup.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\View\Game.cshtml" />
     <Content Include="Scripts\knockout.validation.min.js.map" />
     <Content Include="Scripts\jquery-2.2.0.min.map" />
-    <Content Include="Scripts\underscore.min.map" />
     <TypeScriptCompile Include="..\..\commoncode\AchtungCommunication.d.ts">
       <Link>Scripts\commonCode\AchtungCommunication.d.ts</Link>
     </TypeScriptCompile>
@@ -242,7 +242,6 @@
     <TypeScriptCompile Include="Scripts\typings\moment\moment.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\requirejs\require.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\socket.io-client\socket.io-client.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\toastr\toastr.d.ts" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -255,6 +254,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="Scripts\typings\toastr\toastr.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\underscore\underscore.d.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -262,7 +262,9 @@
     <Folder Include="Scripts\viewModels\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\require.config.ts" />
