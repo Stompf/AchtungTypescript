@@ -51,8 +51,6 @@ class ClientMap {
     }
 
     draw(ctx: CanvasRenderingContext2D, deltaTick: number) {
-
-
         this.mapBox.keys().forEach(key => {
             const vector2D = this.mapBoxIdToVector2D(key);
             const mapBox = this.mapBox.getValue(key);

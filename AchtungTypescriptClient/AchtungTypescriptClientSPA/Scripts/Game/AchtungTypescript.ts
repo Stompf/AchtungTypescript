@@ -31,7 +31,7 @@ class AchtungTypescript {
     }
 
     activate() {
-       
+
     }
 
     backToMainMenu = () => {

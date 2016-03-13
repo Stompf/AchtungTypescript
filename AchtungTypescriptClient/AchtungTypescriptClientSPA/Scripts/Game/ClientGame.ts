@@ -8,7 +8,7 @@ class ClientGame {
     ctx: CanvasRenderingContext2D;
     playerSize: CommonTypings.Size;
     players: Array<ClientPlayer>;
-    
+
     stopMain: number;
     lastTick: number;
     tickLength: number;

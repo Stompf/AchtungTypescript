@@ -7,7 +7,7 @@ class ClientPlayer implements CommonTypings.Player {
     id: string;
     color: string;
 
-    position:CommonTypings.Vector2D;
+    position: CommonTypings.Vector2D;
     size: CommonTypings.Size;
     speed: number;
     keyboardStates: KeyboardStates;
@@ -16,7 +16,7 @@ class ClientPlayer implements CommonTypings.Player {
     isAlive: boolean;
     direction: CommonTypings.Direction;
 
-    constructor(id: string, color: string, speed: number, size: CommonTypings.Size, keys: ClientTypings.KeyboardKeys){
+    constructor(id: string, color: string, speed: number, size: CommonTypings.Size, keys: ClientTypings.KeyboardKeys) {
         this.id = id;
         this.color = color;
         this.speed = speed;
@@ -26,14 +26,14 @@ class ClientPlayer implements CommonTypings.Player {
         this.isAlive = true;
         this.direction = CommonTypings.Direction.RIGHT;
 
-        this.keyboardStates.isDownKeyDown.subscribe(isDown => {
+        this.keyboardStates.isUpKeyDown.subscribe(isDown => {
             if (isDown && this.direction !== CommonTypings.Direction.DOWN) {
                 this.direction = CommonTypings.Direction.UP;
             }
 
         })
 
-        this.keyboardStates.isUpKeyDown.subscribe(isDown => {
+        this.keyboardStates.isDownKeyDown.subscribe(isDown => {
             if (isDown && this.direction !== CommonTypings.Direction.UP) {
                 this.direction = CommonTypings.Direction.DOWN;
             }

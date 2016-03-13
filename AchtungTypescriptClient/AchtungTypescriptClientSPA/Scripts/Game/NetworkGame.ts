@@ -150,7 +150,7 @@ class NetworkGame {
             direction = CommonTypings.Direction.LEFT;
         } else if (e.keyCode === KeyboardStates.D) {
             direction = CommonTypings.Direction.RIGHT;
-        } 
+        }
 
         if (direction != null) {
             this.socket.emit('NewDirection', <AchtungCommunication.NewDirection>{
@@ -161,6 +161,6 @@ class NetworkGame {
         this.lastDirectionChange = moment();
     }
 
-  
+
 }
 export = NetworkGame;
