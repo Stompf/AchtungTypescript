@@ -174,9 +174,8 @@
     <Content Include="Images\arrowUp.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-2.2.0.intellisense.js" />
-    <Content Include="Scripts\jquery-2.2.0.js" />
-    <Content Include="Scripts\jquery-2.2.0.min.js" />
+    <Content Include="Scripts\jquery-2.2.1.js" />
+    <Content Include="Scripts\jquery-2.2.1.min.js" />
     <Content Include="Scripts\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\knockout.validation.js" />
@@ -205,12 +204,12 @@
     <Content Include="Scripts\sammy-0.7.5.js" />
     <Content Include="Scripts\sammy-0.7.5.min.js" />
     <Content Include="Scripts\underscore.min.map" />
+    <Content Include="Scripts\jquery-2.2.1.min.map" />
     <None Include="Views\Shared\_CustomGameSetup.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\View\Game.cshtml" />
     <Content Include="Scripts\knockout.validation.min.js.map" />
-    <Content Include="Scripts\jquery-2.2.0.min.map" />
     <TypeScriptCompile Include="..\..\commoncode\AchtungCommunication.d.ts">
       <Link>Scripts\commonCode\AchtungCommunication.d.ts</Link>
     </TypeScriptCompile>
