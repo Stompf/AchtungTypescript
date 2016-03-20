@@ -11,7 +11,6 @@ class ClientGame {
 
     stopMain: number;
     lastTick: number;
-    tickLength: number;
     lastRender: number;
 
     gameOn: boolean;
@@ -28,8 +27,6 @@ class ClientGame {
         this.lastRender = this.lastTick; //Pretend the first draw was on first update.
 
         this.gameVariables = gameVariables;
-
-        this.tickLength = gameVariables.tickLength; //This sets your simulation to run at 20Hz (50ms)
 
         this.map = new ClientMap(this.ctx.canvas.width, this.ctx.canvas.height, this.gameVariables.playerSize);
     }
@@ -60,7 +57,7 @@ class ClientGame {
 
     private mainLoop = (tFrame: number) => {
         this.stopMain = window.requestAnimationFrame(this.mainLoop);
-        const nextTick = this.lastTick + this.tickLength;
+        const nextTick = this.lastTick + this.gameVariables.tickLength;
         let numTicks = 0;
 
         //If tFrame < nextTick then 0 ticks need to be updated (0 is default for numTicks).
@@ -69,7 +66,7 @@ class ClientGame {
         //If it is large, then either your game was asleep, or the machine cannot keep up.
         if (tFrame > nextTick) {
             const timeSinceTick = tFrame - this.lastTick;
-            numTicks = Math.floor(timeSinceTick / this.tickLength);
+            numTicks = Math.floor(timeSinceTick / this.gameVariables.tickLength);
         }
 
         this.queueUpdates(numTicks);
@@ -79,7 +76,7 @@ class ClientGame {
 
     private queueUpdates = (numTicks: number) => {
         for (let i = 0; i < numTicks; i++) {
-            this.lastTick = this.lastTick + this.tickLength; //Now lastTick is this tick.
+            this.lastTick = this.lastTick + this.gameVariables.tickLength; //Now lastTick is this tick.
             this.update(this.lastTick);
         }
     }

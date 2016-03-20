@@ -22,6 +22,9 @@
         playerSize: CommonTypings.Size;
         playerSpeed: number;
         tickLength: number;
+        holeInterval: number;
+        maxHoleSize: number;
+        minHoleSize: number;
     }
 
     interface BoundingBox {
