@@ -5,6 +5,8 @@
         color: string;
         position: CommonTypings.Vector2D;
         isAlive: boolean;
+        holeState: boolean;
+        lastHoleEnd: Date;
         direction: CommonTypings.Direction;
     }
 
@@ -22,6 +24,7 @@
         playerSize: CommonTypings.Size;
         playerSpeed: number;
         tickLength: number;
+        holeChancePrecent: number;
         holeInterval: number;
         maxHoleSize: number;
         minHoleSize: number;

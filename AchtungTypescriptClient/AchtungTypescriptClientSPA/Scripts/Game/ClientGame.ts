@@ -1,6 +1,7 @@
 ﻿import ClientMap = require('./ClientMap');
 import ClientPlayer = require('./ClientPlayer');
 import textArea = require('./TextArea');
+import moment = require('moment');
 
 class ClientGame {
 
@@ -17,7 +18,7 @@ class ClientGame {
     gameVariables: CommonTypings.GameVariables;
 
     constructor(ctx: CanvasRenderingContext2D, players: Array<ClientPlayer>, gameVariables: CommonTypings.GameVariables) {
-        this.ctx = ctx;
+        this.ctx = ctx
         this.ctx.canvas.tabIndex = 1;
         this.ctx.canvas.style.outline = 'none';
 
@@ -47,6 +48,9 @@ class ClientGame {
 
         setTimeout(() => {
             this.gameOn = true;
+            this.players.forEach(player => {
+                player.resetHoleState();
+            });
         }, 5000);
     }
 
@@ -87,6 +91,20 @@ class ClientGame {
         }
 
         this.players.forEach(player => {
+            if (!player.holeState && player.isAlive) {
+                if (player.lastHoleEnd == null) {
+                    player.lastHoleEnd = new Date();
+                }
+                const time = moment(player.lastHoleEnd).add(this.gameVariables.holeInterval, 'milliseconds').toDate().getTime();
+                const randValue = Math.random() * 1000;
+                if (time <= new Date().getTime() && randValue <= this.gameVariables.holeChancePrecent) {
+                    player.holeState = true;
+                    setTimeout(() => {
+                        player.resetHoleState();
+                    }, Math.floor(Math.random() * this.gameVariables.maxHoleSize) + this.gameVariables.minHoleSize); 
+                }
+            }
+
             this.map.movePlayer(player);
         });
     }
