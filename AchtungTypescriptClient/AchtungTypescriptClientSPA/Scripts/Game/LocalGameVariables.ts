@@ -5,9 +5,9 @@
     },
     playerSpeed: 50,
     tickLength: 100,
-    holeInterval: 5000,
+    holeInterval: 3000,
     maxHoleSize: 500,
     minHoleSize: 100,
-    holeChancePrecent: 40
+    holeChancePrecent: 60
 };
 export = localGameVariables;

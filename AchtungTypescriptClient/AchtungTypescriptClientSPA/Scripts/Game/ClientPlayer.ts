@@ -54,6 +54,11 @@ class ClientPlayer implements CommonTypings.Player {
         });
     }
 
+    draw(ctx: CanvasRenderingContext2D) {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.position.x * this.size.width, this.position.y * this.size.height, this.size.width, this.size.height);
+    }
+
     resetHoleState() {
         this.holeState = false;
         this.lastHoleEnd = new Date();

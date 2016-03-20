@@ -51,7 +51,7 @@ class ClientGame {
             this.players.forEach(player => {
                 player.resetHoleState();
             });
-        }, 5000);
+        }, 2500);
     }
 
     stopGame() {
@@ -101,7 +101,7 @@ class ClientGame {
                     player.holeState = true;
                     setTimeout(() => {
                         player.resetHoleState();
-                    }, Math.floor(Math.random() * this.gameVariables.maxHoleSize) + this.gameVariables.minHoleSize); 
+                    }, Math.floor(Math.random() * this.gameVariables.maxHoleSize) + this.gameVariables.minHoleSize);
                 }
             }
 
@@ -113,11 +113,12 @@ class ClientGame {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
         this.map.draw(this.ctx, tFrame);
 
-        if (this.map.mapBox.size() <= this.players.length) {
-            this.players.forEach(player => {
+        this.players.forEach(player => {
+            if (player.isAlive) {
+                player.draw(this.ctx);
                 this.map.drawDirectionArrow(this.ctx, player.direction, player.position);
-            });
-        }
+            }
+        });
     }
 
     private onBlur() {
