@@ -75,10 +75,12 @@ class ServerMap {
         const mapBoxId = this.toMapBoxId(player.position.x, player.position.y);
         const mapBox = this.mapBox.getValue(mapBoxId);
         if (mapBox == null) {
-            this.mapBox.setValue(mapBoxId, <CommonTypings.MapBox>{
-                mapboxID: mapBoxId,
-                player: player
-            });
+            if (!player.holeState) {
+                this.mapBox.setValue(mapBoxId, <CommonTypings.MapBox>{
+                    mapboxID: mapBoxId,
+                    player: player
+                });
+            }
         } else {
             player.isAlive = false;
         }

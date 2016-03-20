@@ -3,6 +3,8 @@
     color: string;
     position: CommonTypings.Vector2D;
     isAlive: boolean;
+    holeState: boolean;
+    lastHoleEnd: Date;
     direction: CommonTypings.Direction;
 
     lastDirectionChanged: number;
@@ -14,6 +16,7 @@
         this.id = id;
         this.color = color;
         this.isAlive = true;
+        this.holeState = false;
         this.position = startPosition;
         this.direction = startDirection;
     }
@@ -36,6 +39,11 @@
         }
 
         this.lastDirectionChanged = now;
+    }
+
+    resetHoleState() {
+        this.holeState = false;
+        this.lastHoleEnd = new Date();
     }
 }
 

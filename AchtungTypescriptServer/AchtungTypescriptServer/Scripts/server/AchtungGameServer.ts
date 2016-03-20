@@ -32,7 +32,7 @@ class AchtungServer {
     }
 
     startServer() {
-        const startDate = moment().add(5, 'seconds').toDate();
+        const startDate = moment().add(2.5, 'seconds').toDate();
         this.players.values().forEach(player => {
             const mapBoxId = this.map.toMapBoxId(player.position.x, player.position.y);
             this.map.mapBox.setValue(mapBoxId, <CommonTypings.MapBox>{
@@ -50,6 +50,9 @@ class AchtungServer {
 
         this.startTimeout = setTimeout(() => {
             this.isPaused = false;
+            this.players.values().forEach(player => {
+                player.resetHoleState();
+            });
         }, startDate.getTime() - new Date().getTime());
 
         this.interval = setInterval(() => {
@@ -57,6 +60,20 @@ class AchtungServer {
 
             if (!this.isPaused) {
                 this.players.values().forEach(player => {
+                    if (!player.holeState && player.isAlive) {
+                        if (player.lastHoleEnd == null) {
+                            player.lastHoleEnd = new Date();
+                        }
+                        const time = moment(player.lastHoleEnd).add(serverGameVariables.holeInterval, 'milliseconds').toDate().getTime();
+                        const randValue = Math.random() * 1000;
+                        if (time <= new Date().getTime() && randValue <= serverGameVariables.holeChancePrecent) {
+                            player.holeState = true;
+                            setTimeout(() => {
+                                player.resetHoleState();
+                            }, Math.floor(Math.random() * serverGameVariables.maxHoleSize) + serverGameVariables.minHoleSize);
+                        }
+                    }
+
                     this.map.movePlayer(player);
                 });
             }
@@ -66,13 +83,21 @@ class AchtungServer {
             });
 
             if (gameOver.length <= 1) {
-                clearInterval(this.interval);
                 this.playerSockets.values().forEach(playerSocket => {
-                    playerSocket.emit('GameOver', <AchtungCommunication.GameOver>{
+                    playerSocket.emit('ServerTick', <AchtungCommunication.ServerTick>{
+                        tick: this.tick,
                         mapBox: this.map.mapBox.values(),
-                        winner: gameOver.length === 1 ? gameOver[0] : null
+                        players: this.players.values()
                     });
                 });
+
+                //clearInterval(this.interval);
+                //this.playerSockets.values().forEach(playerSocket => {
+                //    playerSocket.emit('GameOver', <AchtungCommunication.GameOver>{
+                //        mapBox: this.map.mapBox.values(),
+                //        winner: gameOver.length === 1 ? gameOver[0] : null
+                //    });
+                //});
             } else {
                 this.playerSockets.values().forEach(playerSocket => {
                     playerSocket.emit('ServerTick', <AchtungCommunication.ServerTick>{

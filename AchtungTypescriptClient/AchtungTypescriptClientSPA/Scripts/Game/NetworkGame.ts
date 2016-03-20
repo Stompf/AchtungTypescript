@@ -7,7 +7,6 @@ class NetworkGame {
 
     map: ClientMap;
     ctx: CanvasRenderingContext2D;
-    playerSize: CommonTypings.Size;
     players: Array<CommonTypings.Player>;
     socket: SocketIOClient.Socket;
     playerID: string;
@@ -129,11 +128,18 @@ class NetworkGame {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
         this.map.draw(this.ctx, tFrame);
 
-        if (this.map.mapBox.size() <= this.players.length) {
-            this.players.forEach(player => {
+        this.players.forEach(player => {
+            if (player.isAlive) {
+                this.ctx.fillStyle = player.color;
+
+                this.ctx.fillRect(player.position.x * this.gameVariables.playerSize.width,
+                    player.position.y * this.gameVariables.playerSize.height,
+                    this.gameVariables.playerSize.width,
+                    this.gameVariables.playerSize.height);
+
                 this.map.drawDirectionArrow(this.ctx, player.direction, player.position);
-            });
-        }
+            }
+        });
     }
 
     private onKeyDown(e: KeyboardEvent) {
@@ -152,7 +158,7 @@ class NetworkGame {
             direction = CommonTypings.Direction.RIGHT;
         }
 
-        if (direction != null) {
+        if (direction != null && this.socket != null) {
             this.socket.emit('NewDirection', <AchtungCommunication.NewDirection>{
                 direction: direction
             });
