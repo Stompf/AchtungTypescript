@@ -233,14 +233,6 @@
     <TypeScriptCompile Include="Scripts\knockoutBindings\KnockoutBindings.ts" />
     <TypeScriptCompile Include="Scripts\typings\bootstrap\bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\ClientTypings.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\knockout.validation\knockout.validation.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\knockout\tests\jasmine.extensions.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\moment\moment-node.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\moment\moment.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\requirejs\require.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\socket.io-client\socket.io-client.d.ts" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -253,6 +245,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="Scripts\typings\socket.io-client\socket.io-client.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\toastr\toastr.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\underscore\underscore.d.ts" />
   </ItemGroup>
@@ -267,6 +260,13 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\require.config.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\knockout.validation\knockout.validation.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\knockout\tests\jasmine.extensions.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\moment\moment-node.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\moment\moment.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\requirejs\require.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\sammyjs\sammyjs.d.ts" />
   </ItemGroup>
   <ItemGroup>
