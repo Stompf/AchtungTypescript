@@ -22,7 +22,7 @@ class AchtungTypescript {
     socket: SocketIOClient.Socket;
     currentGame: ClientGame;
 
-    networkAddress = 'http://lunne.noip.me:3000';
+    networkAddress = 'http://localhost:3000';
 
     constructor(appMain: AppMain) {
         this.appMain = appMain;

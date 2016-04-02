@@ -85,6 +85,7 @@ class NetworkGame {
         });
 
         socket.emit('PlayerReady', <AchtungCommunication.PlayerReady>{});
+        this.socket = socket;
     }
 
     private startGame() {
