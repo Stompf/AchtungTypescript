@@ -167,7 +167,5 @@ class NetworkGame {
 
         this.lastDirectionChange = moment();
     }
-
-
 }
 export = NetworkGame;

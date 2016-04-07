@@ -8,6 +8,7 @@
         holeState: boolean;
         lastHoleEnd: Date;
         direction: CommonTypings.Direction;
+        score: number;
     }
 
     interface Vector2D {
@@ -46,8 +47,12 @@
         players: Array<CommonTypings.Player>;
         roundsToWin: number;
         playerSpeed: number;
-        playerSize: number;
-
+        playerSize: CommonTypings.Size;
+        tickLength: number;
+        holeInterval: number;
+        maxHoleSize: number;
+        minHoleSize: number;
+        holeChancePrecent: number;
     }
 
     const enum Direction {

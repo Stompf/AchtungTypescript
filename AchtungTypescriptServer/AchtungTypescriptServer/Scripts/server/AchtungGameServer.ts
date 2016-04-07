@@ -91,13 +91,13 @@ class AchtungServer {
                     });
                 });
 
-                //clearInterval(this.interval);
-                //this.playerSockets.values().forEach(playerSocket => {
-                //    playerSocket.emit('GameOver', <AchtungCommunication.GameOver>{
-                //        mapBox: this.map.mapBox.values(),
-                //        winner: gameOver.length === 1 ? gameOver[0] : null
-                //    });
-                //});
+                clearInterval(this.interval);
+                this.playerSockets.values().forEach(playerSocket => {
+                    playerSocket.emit('GameOver', <AchtungCommunication.GameOver>{
+                        mapBox: this.map.mapBox.values(),
+                        winner: gameOver.length === 1 ? gameOver[0] : null
+                    });
+                });
             } else {
                 this.playerSockets.values().forEach(playerSocket => {
                     playerSocket.emit('ServerTick', <AchtungCommunication.ServerTick>{

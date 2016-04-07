@@ -11,7 +11,7 @@ class ClientPlayer implements CommonTypings.Player {
     size: CommonTypings.Size;
     speed: number;
     keyboardStates: KeyboardStates;
-
+    score: number;
     isLocalPlayer: boolean;
     isAlive: boolean;
     holeState: boolean;
@@ -28,6 +28,7 @@ class ClientPlayer implements CommonTypings.Player {
         this.isAlive = true;
         this.holeState = false;
         this.direction = CommonTypings.Direction.RIGHT;
+        this.score = 0;
 
         this.keyboardStates.isUpKeyDown.subscribe(isDown => {
             if (isDown && this.direction !== CommonTypings.Direction.DOWN) {

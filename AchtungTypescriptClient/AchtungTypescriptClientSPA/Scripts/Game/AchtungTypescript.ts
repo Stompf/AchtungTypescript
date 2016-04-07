@@ -6,7 +6,6 @@ import ClientGame = require('./ClientGame');
 import NetworkGame = require('./NetworkGame');
 import ClientPlayer = require('./ClientPlayer');
 import KeyboardStates = require('./KeyboardStates');
-import localGameVariables = require('./LocalGameVariables');
 import textArea = require('./TextArea');
 import CustomGameSetup = require('./CustomGameSetup');
 import ko = require('knockout');
@@ -59,7 +58,7 @@ class AchtungTypescript {
         this.currentStep('setup');
     };
 
-    startLocalGame = () => {
+    startLocalGame = (options: CommonTypings.GameOptions) => {
         this.currentStep('game');
 
         if (!this.setupCanvas()) {
@@ -71,16 +70,12 @@ class AchtungTypescript {
         }
 
         textArea.clearText();
-        const localPlayer1 = new ClientPlayer('local_1', 'blue', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.A, right: KeyboardStates.D, up: KeyboardStates.W, down: KeyboardStates.S });
-        const localPlayer2 = new ClientPlayer('local_2', 'red', localGameVariables.playerSpeed, localGameVariables.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.ArrowLeft, right: KeyboardStates.ArrowRight, up: KeyboardStates.ArrowUp, down: KeyboardStates.ArrowDown });
+        const localPlayer1 = new ClientPlayer('local_1', 'blue', options.playerSpeed, options.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.A, right: KeyboardStates.D, up: KeyboardStates.W, down: KeyboardStates.S });
+        const localPlayer2 = new ClientPlayer('local_2', 'red', options.playerSpeed, options.playerSize, <ClientTypings.KeyboardKeys>{ left: KeyboardStates.ArrowLeft, right: KeyboardStates.ArrowRight, up: KeyboardStates.ArrowUp, down: KeyboardStates.ArrowDown });
 
         const localPlayers = [localPlayer1, localPlayer2];
 
-        this.currentGame = new ClientGame(this.ctx, localPlayers, localGameVariables);
-
-        localPlayers.forEach(player => {
-            player.position = this.currentGame.map.getRandomPosition(50);
-        });
+        this.currentGame = new ClientGame(this.ctx, localPlayers, options);
 
         this.currentGame.startGame();
     };

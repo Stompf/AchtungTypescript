@@ -15,9 +15,9 @@ class ClientGame {
     lastRender: number;
 
     gameOn: boolean;
-    gameVariables: CommonTypings.GameVariables;
+    gameOptions: CommonTypings.GameOptions;
 
-    constructor(ctx: CanvasRenderingContext2D, players: Array<ClientPlayer>, gameVariables: CommonTypings.GameVariables) {
+    constructor(ctx: CanvasRenderingContext2D, players: Array<ClientPlayer>, gameOptions: CommonTypings.GameOptions) {
         this.ctx = ctx
         this.ctx.canvas.tabIndex = 1;
         this.ctx.canvas.style.outline = 'none';
@@ -27,13 +27,22 @@ class ClientGame {
         this.lastTick = performance.now();
         this.lastRender = this.lastTick; //Pretend the first draw was on first update.
 
-        this.gameVariables = gameVariables;
+        this.gameOptions = gameOptions;
 
-        this.map = new ClientMap(this.ctx.canvas.width, this.ctx.canvas.height, this.gameVariables.playerSize);
+        this.map = new ClientMap(this.ctx.canvas.width, this.ctx.canvas.height, this.gameOptions.playerSize);
     }
 
     startGame() {
         textArea.addText('startGame');
+        this.map = new ClientMap(this.ctx.canvas.width, this.ctx.canvas.height, this.gameOptions.playerSize);
+        this.lastTick = performance.now();
+        this.lastRender = this.lastTick; //Pretend the first draw was on first update.
+
+        this.players.forEach(player => {
+            player.resetHoleState();
+            player.isAlive = true;
+            player.position = this.map.getRandomPosition(50);
+        });
 
         window.addEventListener('blur', () => { this.onBlur(); }, false);
         this.ctx.canvas.addEventListener('keydown', (e) => { this.onKeyDown(e); }, false);
@@ -61,7 +70,7 @@ class ClientGame {
 
     private mainLoop = (tFrame: number) => {
         this.stopMain = window.requestAnimationFrame(this.mainLoop);
-        const nextTick = this.lastTick + this.gameVariables.tickLength;
+        const nextTick = this.lastTick + this.gameOptions.tickLength;
         let numTicks = 0;
 
         //If tFrame < nextTick then 0 ticks need to be updated (0 is default for numTicks).
@@ -70,7 +79,7 @@ class ClientGame {
         //If it is large, then either your game was asleep, or the machine cannot keep up.
         if (tFrame > nextTick) {
             const timeSinceTick = tFrame - this.lastTick;
-            numTicks = Math.floor(timeSinceTick / this.gameVariables.tickLength);
+            numTicks = Math.floor(timeSinceTick / this.gameOptions.tickLength);
         }
 
         this.queueUpdates(numTicks);
@@ -80,7 +89,7 @@ class ClientGame {
 
     private queueUpdates = (numTicks: number) => {
         for (let i = 0; i < numTicks; i++) {
-            this.lastTick = this.lastTick + this.gameVariables.tickLength; //Now lastTick is this tick.
+            this.lastTick = this.lastTick + this.gameOptions.tickLength; //Now lastTick is this tick.
             this.update(this.lastTick);
         }
     }
@@ -95,18 +104,57 @@ class ClientGame {
                 if (player.lastHoleEnd == null) {
                     player.lastHoleEnd = new Date();
                 }
-                const time = moment(player.lastHoleEnd).add(this.gameVariables.holeInterval, 'milliseconds').toDate().getTime();
+                const time = moment(player.lastHoleEnd).add(this.gameOptions.holeInterval, 'milliseconds').toDate().getTime();
                 const randValue = Math.random() * 1000;
-                if (time <= new Date().getTime() && randValue <= this.gameVariables.holeChancePrecent) {
+                if (time <= new Date().getTime() && randValue <= this.gameOptions.holeChancePrecent) {
                     player.holeState = true;
                     setTimeout(() => {
                         player.resetHoleState();
-                    }, Math.floor(Math.random() * this.gameVariables.maxHoleSize) + this.gameVariables.minHoleSize);
+                    }, Math.floor(Math.random() * this.gameOptions.maxHoleSize) + this.gameOptions.minHoleSize);
                 }
             }
 
             this.map.movePlayer(player);
+        }); 
+
+        const gameOver = this.players.filter(player => {
+            return player.isAlive;
         });
+
+        if (gameOver.length <= 1) {
+            this.gameOn = false;
+            window.cancelAnimationFrame(this.stopMain);
+
+            const scoreString = this.players.map(player => {
+                return player.color + ': ' + player.score;
+            }).join(' - ');
+
+            if (gameOver.length === 1) {
+                const winner = gameOver[0];
+                textArea.addText(winner.color + ' won the round!');
+                winner.score++;
+
+                if (winner.score >= this.gameOptions.roundsToWin) {
+                    textArea.addText('Game over! Final score: ' + scoreString);
+                    textArea.addText(winner.color + ' won the game!');
+                } else {
+                    textArea.addText('Current score: ' + scoreString + '. First to ' + this.gameOptions.roundsToWin + ' wins the game!');
+                    const roundWait = 5000;
+                    textArea.addText('Next round starts in ' + roundWait / 1000 + 's');
+                    setTimeout(() => {
+                        this.startGame();
+                    }, roundWait);
+                }
+            } else {
+                textArea.addText('Draw!');
+                textArea.addText('Current score: ' + scoreString + '. First to ' + this.gameOptions.roundsToWin + ' wins the game!');
+                const roundWait = 5000;
+                textArea.addText('Next round starts in ' + roundWait / 1000 + 's');
+                setTimeout(() => {
+                    this.startGame();
+                }, roundWait);
+            }
+        }
     }
 
     private render = (tFrame: number) => {

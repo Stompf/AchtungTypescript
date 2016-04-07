@@ -6,6 +6,7 @@
     holeState: boolean;
     lastHoleEnd: Date;
     direction: CommonTypings.Direction;
+    score: number;
 
     lastDirectionChanged: number;
     waitTime: number = 500;
