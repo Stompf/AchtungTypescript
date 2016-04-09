@@ -5,7 +5,7 @@
     }
 
     interface GameFound {
-        gameVariables: CommonTypings.GameVariables;
+        gameOptions: CommonTypings.GameOptions;
         players: Array<CommonTypings.Player>;
         playerID: string;
     }
@@ -32,5 +32,11 @@
     interface GameOver {
         mapBox: Array<CommonTypings.MapBox>;
         winner: CommonTypings.Player;
+    }
+
+    interface RoundOver {
+        mapBox: Array<CommonTypings.MapBox>;
+        winner: CommonTypings.Player;
+        timeToNextRound: number;
     }
 }

@@ -18,12 +18,12 @@ class NetworkGame {
     lastServerTick: number;
 
     gameOn: boolean;
-    gameVariables: CommonTypings.GameVariables;
+    gameOptions: CommonTypings.GameOptions;
 
     lastDirectionChange: moment.Moment;
     waitTime: number = 500;
 
-    constructor(ctx: CanvasRenderingContext2D, players: Array<CommonTypings.Player>, gameVariables: CommonTypings.GameVariables, playerID: string) {
+    constructor(ctx: CanvasRenderingContext2D, players: Array<CommonTypings.Player>, gameOptions: CommonTypings.GameOptions, playerID: string) {
         this.ctx = ctx;
         this.ctx.canvas.tabIndex = 1;
         this.ctx.canvas.style.outline = 'none';
@@ -35,12 +35,12 @@ class NetworkGame {
         this.lastRender = this.lastTick; //Pretend the first draw was on first update.
         this.lastServerTick = 0;
 
-        this.gameVariables = gameVariables;
+        this.gameOptions = gameOptions;
         this.lastDirectionChange = moment();
 
-        this.tickLength = gameVariables.tickLength; //This sets your simulation to run at 20Hz (50ms)
+        this.tickLength = gameOptions.tickLength; //This sets your simulation to run at 20Hz (50ms)
 
-        this.map = new ClientMap(this.ctx.canvas.width, this.ctx.canvas.height, this.gameVariables.playerSize);
+        this.map = new ClientMap(this.ctx.canvas.width, this.ctx.canvas.height, this.gameOptions.playerSize);
     }
 
     initSocketCommands(socket: SocketIOClient.Socket) {
@@ -66,6 +66,22 @@ class NetworkGame {
 
             this.lastServerTick = obj.tick;
             this.players = obj.players;
+        });
+
+        socket.on('RoundOver', (obj: AchtungCommunication.RoundOver) => {
+            window.cancelAnimationFrame(this.stopMain);
+
+            this.map.mapBox.clear();
+
+            obj.mapBox.forEach(mapBox => {
+                this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
+            });          
+
+            if (obj.winner != null) {
+                textArea.addText(obj.winner.color + ' (' + obj.winner.id + ') won!');
+            } else {
+                textArea.addText('Its a draw!');
+            }
         });
 
         socket.on('GameOver', (obj: AchtungCommunication.GameOver) => {
@@ -133,10 +149,10 @@ class NetworkGame {
             if (player.isAlive) {
                 this.ctx.fillStyle = player.color;
 
-                this.ctx.fillRect(player.position.x * this.gameVariables.playerSize.width,
-                    player.position.y * this.gameVariables.playerSize.height,
-                    this.gameVariables.playerSize.width,
-                    this.gameVariables.playerSize.height);
+                this.ctx.fillRect(player.position.x * this.gameOptions.playerSize.width,
+                    player.position.y * this.gameOptions.playerSize.height,
+                    this.gameOptions.playerSize.width,
+                    this.gameOptions.playerSize.height);
 
                 this.map.drawDirectionArrow(this.ctx, player.direction, player.position);
             }

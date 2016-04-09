@@ -109,8 +109,9 @@ class AchtungTypescript {
             });
 
             textArea.addText('Your are player - <span style="color: ' + localPlayer.color + '">' + localPlayer.color + '</span>');
+            textArea.addText('First player to ' + obj.gameOptions.roundsToWin + ' wins!');
 
-            const networkGame = new NetworkGame(this.ctx, obj.players, obj.gameVariables, obj.playerID);
+            const networkGame = new NetworkGame(this.ctx, obj.players, obj.gameOptions, obj.playerID);
             networkGame.initSocketCommands(this.socket);
         });
 

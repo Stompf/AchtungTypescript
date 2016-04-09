@@ -1,4 +1,4 @@
-﻿const serverGameVariables = <CommonTypings.GameVariables>{
+﻿const matchMakingOptions = <CommonTypings.GameOptions>{
     playerSize: <CommonTypings.Size>{
         height: 15,
         width: 15
@@ -8,6 +8,7 @@
     holeInterval: 3000,
     maxHoleSize: 500,
     minHoleSize: 100,
-    holeChancePrecent: 60
+    holeChancePrecent: 60,
+    roundsToWin: 5 
 };
-export = serverGameVariables;
+export = matchMakingOptions;

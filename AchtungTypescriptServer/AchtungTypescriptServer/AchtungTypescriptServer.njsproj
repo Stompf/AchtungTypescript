@@ -39,7 +39,7 @@
     <TypeScriptCompile Include="Scripts\collections.ts" />
     <TypeScriptCompile Include="Scripts\server\AchtungGameServer.ts" />
     <TypeScriptCompile Include="Scripts\server\Matchmaking.ts" />
-    <TypeScriptCompile Include="Scripts\server\ServerGameVariables.ts" />
+    <TypeScriptCompile Include="Scripts\server\MatchMakingOptions.ts" />
     <TypeScriptCompile Include="Scripts\server\ServerMap.ts" />
     <TypeScriptCompile Include="Scripts\server\ServerPlayer.ts" />
     <TypeScriptCompile Include="Scripts\typings\express\express.d.ts" />

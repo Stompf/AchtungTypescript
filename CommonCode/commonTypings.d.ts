@@ -21,16 +21,6 @@
         width: number;
     }
 
-    interface GameVariables {
-        playerSize: CommonTypings.Size;
-        playerSpeed: number;
-        tickLength: number;
-        holeChancePrecent: number;
-        holeInterval: number;
-        maxHoleSize: number;
-        minHoleSize: number;
-    }
-
     interface BoundingBox {
         topRight: Vector2D;
         topLeft: Vector2D;

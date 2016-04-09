@@ -1,7 +1,7 @@
 ﻿import collections = require('../collections');
 import ServerPlayer = require('./ServerPlayer');
 import ServerMap = require('./ServerMap');
-import serverGameVariables = require('./ServerGameVariables');
+import matchMakingOptions = require('./MatchMakingOptions');
 import moment = require('moment');
 
 class AchtungServer {
@@ -32,7 +32,9 @@ class AchtungServer {
     }
 
     startServer() {
+        this.isPaused = true;
         const startDate = moment().add(2.5, 'seconds').toDate();
+        this.map = new ServerMap();
         this.players.values().forEach(player => {
             const mapBoxId = this.map.toMapBoxId(player.position.x, player.position.y);
             this.map.mapBox.setValue(mapBoxId, <CommonTypings.MapBox>{
@@ -64,13 +66,13 @@ class AchtungServer {
                         if (player.lastHoleEnd == null) {
                             player.lastHoleEnd = new Date();
                         }
-                        const time = moment(player.lastHoleEnd).add(serverGameVariables.holeInterval, 'milliseconds').toDate().getTime();
+                        const time = moment(player.lastHoleEnd).add(matchMakingOptions.holeInterval, 'milliseconds').toDate().getTime();
                         const randValue = Math.random() * 1000;
-                        if (time <= new Date().getTime() && randValue <= serverGameVariables.holeChancePrecent) {
+                        if (time <= new Date().getTime() && randValue <= matchMakingOptions.holeChancePrecent) {
                             player.holeState = true;
                             setTimeout(() => {
                                 player.resetHoleState();
-                            }, Math.floor(Math.random() * serverGameVariables.maxHoleSize) + serverGameVariables.minHoleSize);
+                            }, Math.floor(Math.random() * matchMakingOptions.maxHoleSize) + matchMakingOptions.minHoleSize);
                         }
                     }
 
@@ -92,12 +94,32 @@ class AchtungServer {
                 });
 
                 clearInterval(this.interval);
-                this.playerSockets.values().forEach(playerSocket => {
-                    playerSocket.emit('GameOver', <AchtungCommunication.GameOver>{
-                        mapBox: this.map.mapBox.values(),
-                        winner: gameOver.length === 1 ? gameOver[0] : null
+                if (gameOver.length === 1) {
+                    gameOver[0].score++;
+                }
+
+                if (gameOver.length === 1 && gameOver[0].score < matchMakingOptions.roundsToWin) {
+                    const nextRoundTime = 5000;
+                    this.playerSockets.values().forEach(playerSocket => {
+                        playerSocket.emit('RoundOver', <AchtungCommunication.RoundOver>{
+                            mapBox: this.map.mapBox.values(),
+                            winner: gameOver[0],
+                            timeToNextRound: nextRoundTime
+                        });
                     });
-                });
+
+                    setTimeout(() => {
+                        this.startServer();
+                    }, nextRoundTime);
+                    
+                } else {
+                    this.playerSockets.values().forEach(playerSocket => {
+                        playerSocket.emit('GameOver', <AchtungCommunication.GameOver>{
+                            mapBox: this.map.mapBox.values(),
+                            winner: gameOver.length === 1 ? gameOver[0] : null
+                        });
+                    });
+                }
             } else {
                 this.playerSockets.values().forEach(playerSocket => {
                     playerSocket.emit('ServerTick', <AchtungCommunication.ServerTick>{
@@ -107,7 +129,7 @@ class AchtungServer {
                     });
                 });
             }
-        }, serverGameVariables.tickLength);
+        }, matchMakingOptions.tickLength);
     }
 
     stopGame() {

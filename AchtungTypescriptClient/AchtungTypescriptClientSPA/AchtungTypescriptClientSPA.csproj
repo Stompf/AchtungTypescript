@@ -226,7 +226,6 @@
     <TypeScriptCompile Include="Scripts\game\ClientPlayer.ts" />
     <TypeScriptCompile Include="Scripts\game\CustomGameSetup.ts" />
     <TypeScriptCompile Include="Scripts\game\KeyboardStates.ts" />
-    <TypeScriptCompile Include="Scripts\game\LocalGameVariables.ts" />
     <TypeScriptCompile Include="Scripts\game\NetworkGame.ts" />
     <TypeScriptCompile Include="Scripts\game\TextArea.ts" />
     <TypeScriptCompile Include="Scripts\game\ToastrOptions.ts" />

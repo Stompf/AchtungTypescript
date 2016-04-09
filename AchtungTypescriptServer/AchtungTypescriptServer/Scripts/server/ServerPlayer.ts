@@ -20,6 +20,7 @@
         this.holeState = false;
         this.position = startPosition;
         this.direction = startDirection;
+        this.score = 0;
     }
 
     changeDirection(direction: CommonTypings.Direction) {

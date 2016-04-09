@@ -1,5 +1,5 @@
 ﻿import collections = require('../collections');
-import serverGameVariables = require('./ServerGameVariables');
+import matchMakingOptions = require('./MatchMakingOptions');
 
 class ServerMap {
 
@@ -11,7 +11,7 @@ class ServerMap {
     mapBoxPartsHeight: number;
 
     constructor() {
-        this.playerSize = serverGameVariables.playerSize;
+        this.playerSize = matchMakingOptions.playerSize;
         this.size = <CommonTypings.Size>{
             width: 1000,
             height: 600
