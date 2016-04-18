@@ -38,5 +38,6 @@
         mapBox: Array<CommonTypings.MapBox>;
         winner: CommonTypings.Player;
         timeToNextRound: number;
+        players: Array<CommonTypings.Player>;
     }
 }

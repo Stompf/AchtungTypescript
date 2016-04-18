@@ -47,6 +47,7 @@ class NetworkGame {
         socket.on('StartGame', (obj: AchtungCommunication.StartGame) => {
             const diff = Math.abs(moment.duration(moment().diff(moment(obj.timeToStart))).asSeconds());
             textArea.addText('Game starting in ' + diff + ' seconds');
+            this.map = new ClientMap(this.ctx.canvas.width, this.ctx.canvas.height, this.gameOptions.playerSize);
             obj.mapBox.forEach(mapBox => {
                 this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
             });
@@ -69,13 +70,13 @@ class NetworkGame {
         });
 
         socket.on('RoundOver', (obj: AchtungCommunication.RoundOver) => {
-            window.cancelAnimationFrame(this.stopMain);
-
             this.map.mapBox.clear();
 
             obj.mapBox.forEach(mapBox => {
                 this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
             });          
+
+            this.players = obj.players;
 
             if (obj.winner != null) {
                 textArea.addText(obj.winner.color + ' (' + obj.winner.id + ') won!');
@@ -105,6 +106,7 @@ class NetworkGame {
     }
 
     private startGame() {
+        window.cancelAnimationFrame(this.stopMain);
         this.ctx.canvas.addEventListener("keydown", (e) => { this.onKeyDown(e); }, false);
 
         this.mainLoop(performance.now());

@@ -13,13 +13,15 @@
 
     ready: boolean;
 
-    constructor(id: string, color: string, startPosition: CommonTypings.Vector2D, startDirection: CommonTypings.Direction) {
+    constructor(id: string, color: string) {
         this.id = id;
         this.color = color;
         this.isAlive = true;
         this.holeState = false;
-        this.position = startPosition;
-        this.direction = startDirection;
+        this.position = <CommonTypings.Vector2D>{
+            x: 0, y: 0
+        };
+        this.direction = CommonTypings.Direction.RIGHT;
         this.score = 0;
     }
 
