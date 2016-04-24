@@ -45,9 +45,11 @@ class NetworkGame {
 
     initSocketCommands(socket: SocketIOClient.Socket) {
         socket.on('StartGame', (obj: AchtungCommunication.StartGame) => {
+            this.lastServerTick = 0;
             const diff = Math.abs(moment.duration(moment().diff(moment(obj.timeToStart))).asSeconds());
             textArea.addText('Game starting in ' + diff + ' seconds');
             this.map = new ClientMap(this.ctx.canvas.width, this.ctx.canvas.height, this.gameOptions.playerSize);
+            this.players = obj.players;
             obj.mapBox.forEach(mapBox => {
                 this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
             });
@@ -74,7 +76,7 @@ class NetworkGame {
 
             obj.mapBox.forEach(mapBox => {
                 this.map.mapBox.setValue(mapBox.mapboxID, mapBox);
-            });          
+            });
 
             this.players = obj.players;
 
@@ -107,7 +109,8 @@ class NetworkGame {
 
     private startGame() {
         window.cancelAnimationFrame(this.stopMain);
-        this.ctx.canvas.addEventListener("keydown", (e) => { this.onKeyDown(e); }, false);
+        this.ctx.canvas.removeEventListener("keydown", this.onKeyDown, false);
+        this.ctx.canvas.addEventListener("keydown", this.onKeyDown, false);
 
         this.mainLoop(performance.now());
         this.gameOn = true;
@@ -161,7 +164,7 @@ class NetworkGame {
         });
     }
 
-    private onKeyDown(e: KeyboardEvent) {
+    private onKeyDown = (e: KeyboardEvent) => {
         if (!this.gameOn && moment().add(this.waitTime, 'milliseconds').diff(this.lastDirectionChange) > 0) {
             return;
         }
@@ -184,6 +187,6 @@ class NetworkGame {
         }
 
         this.lastDirectionChange = moment();
-    }
+    };
 }
 export = NetworkGame;

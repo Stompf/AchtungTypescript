@@ -17,6 +17,7 @@
     interface StartGame {
         timeToStart: Date;
         mapBox: Array<CommonTypings.MapBox>;
+        players: Array<CommonTypings.Player>;
     }
 
     interface PlayerReady {
