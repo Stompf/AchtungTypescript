@@ -11,7 +11,7 @@
         </div>
     </div>
     <div data-bind="visible: $root.currentStep() === 'setup', with: $root.customGameSetup">
-        @Html.Partial("_CustomGameSetup")
+        @Html.Partial(@Url.Content("~/Views/Shared/") + "_CustomGameSetup.cshtml")
     </div>
     <div data-bind="visible: $root.currentStep() === 'game'">
         <div>

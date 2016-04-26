@@ -21,7 +21,7 @@ class AchtungTypescript {
     socket: SocketIOClient.Socket;
     currentGame: ClientGame;
 
-    networkAddress = 'http://localhost:3000';
+    networkAddress = 'http://achtung-lunne.rhcloud.com';
 
     constructor(appMain: AppMain) {
         this.appMain = appMain;

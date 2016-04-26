@@ -105,26 +105,28 @@ class ClientMap {
     }
 
     private initArrowImages() {
+        const baseUrl = $('#baseURL').html();
+
         const arrowImageUp = new Image();
-        arrowImageUp.src = 'Images/arrowUp.png';
+        arrowImageUp.src = baseUrl + 'Images/arrowUp.png';
         arrowImageUp.onload = () => {
             this.arrowImageUp = arrowImageUp;
         };
 
         const arrowImageDown = new Image();
-        arrowImageDown.src = 'Images/arrowDown.png';
+        arrowImageDown.src = baseUrl + 'Images/arrowDown.png';
         arrowImageDown.onload = () => {
             this.arrowImageDown = arrowImageDown;
         };
 
         const arrowImageLeft = new Image();
-        arrowImageLeft.src = 'Images/arrowLeft.png';
+        arrowImageLeft.src = baseUrl + 'Images/arrowLeft.png';
         arrowImageLeft.onload = () => {
             this.arrowImageLeft = arrowImageLeft;
         };
 
         const arrowImageRight = new Image();
-        arrowImageRight.src = 'Images/arrowRight.png';
+        arrowImageRight.src = baseUrl + 'Images/arrowRight.png';
         arrowImageRight.onload = () => {
             this.arrowImageRight = arrowImageRight;
         };

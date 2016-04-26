@@ -7,9 +7,11 @@ import Matchmaking = require('./Scripts/server/Matchmaking');
 
 const connections = new collection.Dictionary<string, SocketIO.Socket>();
 const matchmaking = new Matchmaking();
+const port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+const ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
-http.listen(3000, () => {
-    console.log('listening on *:3000');
+http.listen(port, ipaddress, () => {
+    console.log('listening on ' + ipaddress + ':' + port);
 });
 
 io.on('connection', (socket: SocketIO.Socket) => {
