@@ -125,14 +125,14 @@ class ClientGame {
             this.gameOn = false;
             window.cancelAnimationFrame(this.stopMain);
 
-            const scoreString = this.players.map(player => {
-                return player.color + ': ' + player.score;
-            }).join(' - ');
-
             if (gameOver.length === 1) {
                 const winner = gameOver[0];
                 textArea.addText(winner.color + ' won the round!');
                 winner.score++;
+
+                const scoreString = this.players.map(player => {
+                    return player.color + ': ' + player.score;
+                }).join(' - ');
 
                 if (winner.score >= this.gameOptions.roundsToWin) {
                     textArea.addText('Game over! Final score: ' + scoreString);
@@ -146,6 +146,9 @@ class ClientGame {
                     }, roundWait);
                 }
             } else {
+                const scoreString = this.players.map(player => {
+                    return player.color + ': ' + player.score;
+                }).join(' - ');
                 textArea.addText('Draw!');
                 textArea.addText('Current score: ' + scoreString + '. First to ' + this.gameOptions.roundsToWin + ' wins the game!');
                 const roundWait = 5000;
