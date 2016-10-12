@@ -3,8 +3,8 @@
         height: 15,
         width: 15
     },
-    playerSpeed: 50,
-    tickLength: 100,
+    playerSpeed: 1350,
+    tickLength: 50,
     holeInterval: 3000,
     maxHoleSize: 500,
     minHoleSize: 100,
